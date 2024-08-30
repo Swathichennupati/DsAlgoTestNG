@@ -22,14 +22,15 @@ public class BasePage {
 		public Properties testdata;
 		public InputStream input;
 	    protected WebDriverWait wait;
+	    
 		  public void navigateTo(String pagename) {
 				String urlName = prop.getProperty(pagename);
 				driver.get(urlName);
 			}
-		
+		 
 
 		public BasePage(WebDriver driver) {
-	        this.driver = driver;
+	        this.driver = driver; 
 	        PageFactory.initElements(driver, this);
 	        this.wait = new WebDriverWait(driver, Duration.ofSeconds(180));
 	        prop=DriverManager.get_Properties_from_configfile();
