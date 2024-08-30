@@ -4,52 +4,103 @@ package TestSuites;
 	import java.util.Map;
 
 	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider; 
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
-	import org.testng.annotations.Test;
-
-	import com.dsAlgoProject.Hooks.dsAlgoHooks; 
 
 	import com.dsAlgoWebDriverManager.DriverManager;
 
-	import PageFactory.NumpyNinjaPage;
+import PageFactory.NumpyNinjaPage;
 	import PageFactory.loginpage;
-	import Utilities.TestDataFromExcelSheet;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	public class LoginTest {
+public class LoginTest extends BaseTest {
+	private Object[][] data;
+	NumpyNinjaPage numpyninjapage;
+	TestDataFromExcelSheet testDataFromExcelSheet;
+    private static String EXCEL_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\DsAlgoTestData.xlsx";
+     String expectedMessage;
+     String actualMessage;
 
-	    private WebDriver driver;
-	    private loginpage loginPage;
-	    private NumpyNinjaPage numpyninjapage;
-	    private dsAlgoHooks hooks = new dsAlgoHooks();
+	public LoginTest() {
+		super();
+	}
 
-	    public LoginTest() {
-	        this.driver = DriverManager.getDriver();
-	        loginPage = new loginpage(driver);
-	        numpyninjapage = new NumpyNinjaPage(driver);
-	        hooks.performLogin(); // Assuming this method logs in the user (remove if not needed)
-	    }
+	@Parameters("browser")
+	@BeforeMethod
+	public void setUp(String browser) throws InterruptedException, IOException {
+		initializeDriver(browser);	
+		System.out.println("beforemethod");		
+	}
+    @Test(priority=1,dataProvider = "validexcel")
+	public void testforCorrectUsernamePassword(String username,String password,String message) throws IOException, InterruptedException 
+	{
+    	loginPage.enterusername(username);
+		loginPage.enterpassword(password);
+		expectedMessage =message;
+		String field;
+	
+		NumpyNinjaPage numpyninjapage = loginPage.clickonloginbutton();
+		try {
+			if (expectedMessage.equals(numpyninjapage.getTitle())) {
+				actualMessage = numpyninjapage.getTitle();
 
-	    @DataProvider(name = "invalidLoginData")
-	    public Object[][] getInvalidLoginData() throws IOException {
-	        TestDataFromExcelSheet excelreader = new TestDataFromExcelSheet();
-	        return excelreader.getDataFromExcel("InvalidLogin"); // Assuming "InvalidLogin" is your sheet name
-	    }
+				Assert.assertTrue(actualMessage.contains(expectedMessage));
+				LoggerLoad.info("User logged in sucessfully");
 
-	    @Test(dataProvider = "invalidLoginData")
-	    public void testInvalidLogin(String username, String password, String expectedMessage) throws InterruptedException {
-	        loginPage.enterusername(username);
-	        loginPage.enterpassword(password);
-	        loginPage.clickonloginbutton();
+			} 
+			else if(username==""||password=="")
+			{
+				if(username=="")
+				{
+					field="username";
+				}
+				else
+				{
+					field="password";
+				}
+				expectedMessage="Please fill out this field.";
+				try {
+				actualMessage = loginPage.getRequiredFieldErrorMessage(field);
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+				}
+				System.out.println();
+				LoggerLoad.info("User did not enter fields " + field);
+				System.out.println(actualMessage.trim());
+				Assert.assertEquals(actualMessage, expectedMessage, "Error messsages did not match");
 
-	        String  actualMessage = loginPage.getLoginErrorMessage();
-	        Assert.assertTrue(actualMessage.contains(expectedMessage), "Error message mismatch!");
-	        System.out.println("Test passed: Expected error message displayed for invalid credentials.");
-	    }
+			}
+			else {
+				actualMessage = loginPage.getLoginErrorMessage();
+				Assert.assertTrue(actualMessage.contains(expectedMessage));
+				LoggerLoad.info("User entered username or password incorrectly");
+			}
+		} finally {
+			LoggerLoad.info("Completed login attempt.");
 
-	    // Remaining LoginSteps methods can be converted similarly:
-	    // - Use separate data providers for different login scenarios (valid credentials, missing fields)
-	    // - Update test methods based on specific error message retrieval methods in your PageFactory classes
+		}		
+	}
+
+    @DataProvider (name = "validexcel")
+	 public Object[][] getTestData() throws IOException 
+	 {
+		Object data[][]=null;
+			data = TestDataFromExcelSheet.getTestData("LoginUsernamePassword");
+		return data;		
+	 }
+ 
+    
+    @AfterMethod
+	public void teardown() throws IOException {
+		driver.quit();
 	}
 
 }

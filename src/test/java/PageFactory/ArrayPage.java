@@ -18,16 +18,16 @@ public class ArrayPage extends BasePage {
 	@FindBy(xpath = "//a[@href=\"arrays-in-python\"]")
 	WebElement arrayPython_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/array/arrays-using-list/\"]")
+	@FindBy(xpath ="//a[text()='Arrays Using List']")
 	WebElement arraysUsingList_Link;
 	
-	@FindBy(xpath="//a[@href=\"/array/basic-operations-in-lists/\"]")
+	@FindBy(xpath ="//a[text()='Basic Operations in Lists']")
 	WebElement basicOperations_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/array/applications-of-array/\"]")
+	@FindBy(xpath ="//a[text()='Applications of Array']")
 	WebElement applicationsOfArray_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/array/practice\"]")
+	@FindBy(xpath ="//a[text()='Practice Questions']")
 	WebElement practiceQuest_Link;
 	
 	
@@ -50,7 +50,7 @@ public class ArrayPage extends BasePage {
 	public void clickRun() {
 		 run_btn.click();
 	}
-
+	
 	
 	public void clickingLink(String linkName) throws Exception {
 		
@@ -64,25 +64,24 @@ public class ArrayPage extends BasePage {
 		   
 		case "Arrays Using List":
 			
-			arraysUsingList_Link.click();
-			
+			clickElementUsingJS(arraysUsingList_Link);			
 			break;
 			
 		case "Basic Operations in Lists":
 			
-			basicOperations_Link.click();
+			clickElementUsingJS(basicOperations_Link);
 			
 			break;
 			
         case "Applications of Array":
 			
-			applicationsOfArray_Link.click();
-			
+			clickElementUsingJS(applicationsOfArray_Link);
+
 			break;	
 			
 		case "Practice Questions":
 			
-			practiceQuest_Link.click();
+			clickElementUsingJS(practiceQuest_Link);
 			
 			break;
 			

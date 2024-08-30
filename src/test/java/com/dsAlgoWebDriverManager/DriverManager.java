@@ -42,25 +42,25 @@ public class DriverManager {
 
         if (browser.equalsIgnoreCase("chrome")) {
         	ChromeOptions options = new ChromeOptions();
-        	options.addArguments("--headless");
-        	options.addArguments("--disable-extensions");
-        	options.addArguments("--disable-popup-blocking");
-        	options.addArguments("--disable-gpu");
+//        	options.addArguments("--headless");
+//        	options.addArguments("--disable-extensions");
+//        	options.addArguments("--disable-popup-blocking");
+//        	options.addArguments("--disable-gpu");
         	tldriver.set(new ChromeDriver(options));
         } else if (browser.equalsIgnoreCase("firefox")) {
         	FirefoxOptions options = new FirefoxOptions();
-        	options.addArguments("--headless");
-        	options.addArguments("--disable-extensions");
-        	options.addArguments("--disable-popup-blocking");
-        	options.addArguments("--disable-gpu");
+//        	options.addArguments("--headless");
+//        	options.addArguments("--disable-extensions");
+//        	options.addArguments("--disable-popup-blocking");
+//        	options.addArguments("--disable-gpu");
         	tldriver.set(new FirefoxDriver(options));
         }
         	else if (browser.equalsIgnoreCase("edge")) {
         		EdgeOptions options = new EdgeOptions();
-        		options.addArguments("--headless");
-            	options.addArguments("--disable-extensions");
-            	options.addArguments("--disable-popup-blocking");
-            	options.addArguments("--disable-gpu");
+//        		options.addArguments("--headless");
+//            	options.addArguments("--disable-extensions");
+//            	options.addArguments("--disable-popup-blocking");
+//            	options.addArguments("--disable-gpu");
             	tldriver.set(new EdgeDriver(options));
         } 
         	else {

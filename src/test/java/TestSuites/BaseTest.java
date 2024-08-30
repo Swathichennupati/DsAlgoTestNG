@@ -1,78 +1,101 @@
 package TestSuites;
 
-    import java.io.FileInputStream;
-	import java.io.IOException;
-	import java.io.InputStream;
-	import java.time.Duration;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-	import java.util.Properties;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
-	import org.openqa.selenium.WebDriver;
-	import org.openqa.selenium.chrome.ChromeDriver;
-	import org.openqa.selenium.edge.EdgeDriver; 
+import com.aventstack.extentreports.ExtentTest;
+import com.dsAlgoWebDriverManager.DriverManager;
 
-	import org.openqa.selenium.firefox.FirefoxDriver;
-	import org.testng.annotations.BeforeClass; 
+import PageFactory.ArrayPage;
+import PageFactory.NumpyNinjaPage;
+import PageFactory.loginpage;
+import Utilities.ConfigReader;
+import Utilities.ExtentReportManager;
+import Utilities.RetryforFailedScenarios;
+import Utilities.TestDataFromExcelSheet;
 
 
-	public class BaseTest {
+public class BaseTest {
+	public static Properties prop;
+	public static InputStream input;
+	private static final Lock lock = new ReentrantLock();
+	ExtentTest test;
+	File sourcePath;
+	TestDataFromExcelSheet TestDataFromExcelsheet = new TestDataFromExcelSheet();
+	DriverManager drivermanager = new DriverManager();
+	protected WebDriver driver;
+    protected NumpyNinjaPage numpyninjapage;
+    protected ArrayPage arrayPage;
+    public loginpage loginPage;
 
-	    public WebDriver driver;
-	    public Properties prop;
+	public BaseTest()
+	{
+		prop = DriverManager.getproperties();
 
-	    @BeforeClass(alwaysRun = true)
-	    public void setUp() throws IOException {
-	        prop = new Properties();
-	        InputStream input = null;
-
-	        try {
-	            input = new FileInputStream(System.getProperty("user.dir")
-	                    + "\\src\\test\\resources\\config\\global.properties");
-
-	            prop.load(input);
-
-	            String browserName = prop.getProperty("browserName");
-	            initilizebrowser(browserName);
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        } finally {
-	            if (input != null) {
-	                try {
-	                    input.close();
-	                } catch (IOException e) {
-	                    System.out.println("wrongpath");
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    }
-
-	    private void initilizebrowser(String browserName) {
-	        if (browserName.equals("chrome")) {
-	            driver = new ChromeDriver();
-	        } else if (browserName.equals("firefox")) {
-	            driver = new FirefoxDriver();
-
-	        } else if (browserName.equals("edge")) {
-	            driver = new EdgeDriver(); 
-
-	        } else {
-	            throw new IllegalArgumentException("Unsupported browser: " + browserName);
-	        }
-
-	        driver.manage().window().maximize(); 
-
-	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(90));
-	        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(90)); 
-
-	        driver.get(prop.getProperty("url"));
-	    }
-
-	    public void quitDriver() {
-	        if (driver != null) {
-	            driver.quit();
-	        }
-	    }
 	}
 
+	
+	public void initializeDriver(String browser) throws InterruptedException {
+        DriverManager.initilizedriver(browser);
+        driver = DriverManager.getDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(240));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(240));
+        driver.get(prop.getProperty("loginpage"));
+        numpyninjapage = new NumpyNinjaPage(driver);
+        arrayPage = new ArrayPage(driver);
+        loginPage = new loginpage(driver);
+            }
+	public void logintotheapplication() throws InterruptedException
+	{
+        
+        loginPage.enterusername(prop.getProperty("username"));
+        loginPage.enterpassword(prop.getProperty("password"));
+        numpyninjapage = loginPage.clickonloginbutton();
+	}
+
+	
+	public void driverquit() throws IOException {
+
+
+		try {
+			if (driver != null) {
+				System.out.println("driver is quitting");
+				DriverManager.quitDriver();
+			}
+
+		} finally {
+			lock.unlock();
+		}
+	}
+
+//	private void captureScreenshotOnFailure(Scenario scenario) throws IOException {
+//		if (scenario.isFailed()) {
+//
+//			String screenshotName = scenario.getName().replaceAll(" ", "_");
+//			String timestamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//			String destFilePath = System.getProperty("user.dir") + "\\src\\test\\resources\\Screenshots\\"
+//					+ screenshotName + "_" + timestamp + ".png";
+//			File sourcePath = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//			File destFile = new File(destFilePath);
+//
+//			FileUtils.copyFile(sourcePath, destFile);
+//
+//			scenario.attach(FileUtils.readFileToByteArray(sourcePath), "image/png", screenshotName);
+//
+//			test.addScreenCaptureFromPath(destFilePath, "Screenshot on failure");
+//		}
+	}
 
