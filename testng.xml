@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests" thread-count="3">
+	<test name="ChromeTest">
+		<!--<parameter name="browser" value="chrome"></parameter>
+		 <parameter name="sheetName1" value="Arrays"/>
+        <parameter name="sheetName2" value="DsAlgo"/>
+            <parameter name="rowIndex1" value="1"/>
+    <classes>
+   <class name="TestSuites.ArrayTest"/>-->
+		<parameter name="browser" value="chrome"></parameter>
+		<classes>
+
+			<class name="TestSuites.LoginTest" />
+		</classes>
+
+	</test>
+	<test name="RerunFailedTests" parallel="false">
+		<classes>
+
+			<class name="Utilities.RetryforFailedScenarios" />
+		</classes>
+	</test>
+</suite> <!--
+Suite -->

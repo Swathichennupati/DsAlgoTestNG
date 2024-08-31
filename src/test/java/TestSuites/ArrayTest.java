@@ -14,6 +14,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.dsAlgoWebDriverManager.DriverManager;
 import PageFactory.NumpyNinjaPage;
+import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
 import log4j.LoggerLoad;
 import PageFactory.ArrayPage;
@@ -22,6 +23,7 @@ public class ArrayTest extends BaseTest {
 
 	private Map<String, String> data;
 	TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
+	DataproviderUtilities dataproviderUtilities=new DataproviderUtilities();
 	public ArrayTest() {
 		super();
 	}
@@ -35,24 +37,11 @@ public class ArrayTest extends BaseTest {
 		driver.get(prop.getProperty("arrayPage"));
 
 	}
-
-	@DataProvider(name = "hyperlinkNavigationForArrays")
-	public Object[][] getHyperlinkNavigationForArrays() throws IOException {
-		Object[][] data=null;
-		try
-		{
-		 data= TestDataFromExcelSheet.getTestData("ArraysClickonLink");
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		
-  return data;
-	}
-
-	@Test(priority = 1, dataProvider = "hyperlinkNavigationForArrays")
+	
+	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
 	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
+		
 		try
 		{
 		if (linkText.equalsIgnoreCase("Practice Questions")) {
@@ -65,7 +54,6 @@ public class ArrayTest extends BaseTest {
 			try {
 				arrayPage.clickingLink(linkText);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String actualTitle = arrayPage.getTitle();
@@ -82,22 +70,8 @@ public class ArrayTest extends BaseTest {
 	}
 
 
-	@DataProvider(name = "tryHereNavigationDataFromArraysPages")
-	public Object[][] getTryHereNavigationDataFromArraysPages() {
-		Object[][] data=null;
-		try
-		{
-		 data= TestDataFromExcelSheet.getTestData("ArraysClickonLink");
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		 return data;
-			
-		}  
-
-	@Test(priority = 2, dataProvider = "hyperlinkNavigationForArrays")
+	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
 	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
 		driver.get(prop.getProperty(Url));
 		arrayPage.clickonTryEditor();
@@ -106,27 +80,13 @@ public class ArrayTest extends BaseTest {
 				+ expectedtitle);
 
 	}
-	@Test(priority=3, dataProvider ="numberofLinks")
+	@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName2")
 	public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
 	{
 		int numberoflinks=arrayPage.getnumberoflinksinPracticeQuestionsPage();
 		Assert.assertEquals(numberoflinks,Expectednumberoflinks );
 		
 	}
-	@DataProvider(name = "numberofLinks")
-	public Object[][] getnumberoflinksinArrayPage() {
-		Object[][] data=null;
-		try
-		{
-		 data= TestDataFromExcelSheet.getDataFromSheetRowwise("DsAlgo",1);
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		
-		 return data;
-			
-		} 
-	
+
 }
