@@ -1,5 +1,7 @@
 package PageFactory;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,9 +13,7 @@ public class ArrayPage extends BasePage {
 	public  ArrayPage(WebDriver driver) {
 		
 	    super(driver);
-
 	}
-
 	
 	@FindBy(xpath = "//a[@href=\"arrays-in-python\"]")
 	WebElement arrayPython_Link;
@@ -30,7 +30,8 @@ public class ArrayPage extends BasePage {
 	@FindBy(xpath ="//a[text()='Practice Questions']")
 	WebElement practiceQuest_Link;
 	
-	
+	@FindBy(xpath="//a[@class='list-group-item']")
+	List<WebElement> listoflinksinPracticeQuestionsPage;
 	//TryEditor
     @FindBy(xpath= "//a[@href='/tryEditor']")	
     WebElement TryEdt_btn;
@@ -42,7 +43,6 @@ public class ArrayPage extends BasePage {
 	@FindBy(id="output")
 	WebElement output;
 	
-	
 	public void clickonTryEditor() {
 		TryEdt_btn.click();
 	}
@@ -50,7 +50,6 @@ public class ArrayPage extends BasePage {
 	public void clickRun() {
 		 run_btn.click();
 	}
-	
 	
 	public void clickingLink(String linkName) throws Exception {
 		
@@ -90,6 +89,11 @@ public class ArrayPage extends BasePage {
 		}
 		
 	}
+	public int getnumberoflinksinPracticeQuestionsPage()
+	{
+		return listoflinksinPracticeQuestionsPage.size();
+	}
+	
 		
 	
 }

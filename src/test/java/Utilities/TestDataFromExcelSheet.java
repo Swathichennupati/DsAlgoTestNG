@@ -1,10 +1,13 @@
 package Utilities;
 	import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -46,7 +49,61 @@ public class TestDataFromExcelSheet {
 
         return data;
     }
-    
+	public static Object[][] getDataFromSheetRowwise(String sheetName, int rowIndex) {
+        List<Object[]> data = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(EXCEL_FILE_PATH);
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheet(sheetName);
+            if (sheet == null) {
+                System.out.println("Sheet " + sheetName + " does not exist.");
+                return new Object[0][0];
+            }
+
+            Row row = sheet.getRow(rowIndex);
+            if (row != null) {
+                Object[] rowData = new Object[row.getLastCellNum()];
+                for (int j = 0; j < row.getLastCellNum(); j++) {
+                    Cell cell = row.getCell(j);
+                    if (cell != null) {
+                        switch (cell.getCellType()) {
+                            case STRING:
+                                rowData[j] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                if (DateUtil.isCellDateFormatted(cell)) {
+                                    rowData[j] = cell.getDateCellValue();
+                                } else {
+                                	double numericValue = cell.getNumericCellValue();
+                                    if (numericValue == (int) numericValue) {
+                                        rowData[j] = (int) numericValue; // Cast to int if applicable
+                                    } else {
+                                        rowData[j] = numericValue; // Use double for non-integer numeric values
+                                    }                                }
+                                break;
+                            case BOOLEAN:
+                                rowData[j] = cell.getBooleanCellValue();
+                                break;
+                            case FORMULA:
+                                rowData[j] = cell.getCellFormula();
+                                break;
+                            default:
+                                rowData[j] = "Unknown Value";
+                                break;
+                        }
+                    }
+                }
+                data.add(rowData);
+            } else {
+                System.out.println("Row " + rowIndex + " does not exist.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return data.toArray(new Object[0][0]);
+    }
+
     
 
     public  void removeTestData() {
