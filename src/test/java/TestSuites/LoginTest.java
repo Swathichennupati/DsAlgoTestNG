@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 
 import PageFactory.NumpyNinjaPage;
 	import PageFactory.loginpage;
+import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
 import log4j.LoggerLoad;
 
@@ -37,12 +38,15 @@ public class LoginTest extends BaseTest {
 		initializeDriver(browser);	
 		System.out.println("beforemethod");		
 	}
+	
+	
     @Test(priority=1,dataProvider = "validexcel")
 	public void testforCorrectUsernamePassword(String username,String password,String message) throws IOException, InterruptedException 
 	{
-    	loginPage.enterusername(username);
-		loginPage.enterpassword(password);
-		expectedMessage =message;
+    	loginPage.enterUsernamePassword(username,password);
+    	//loginPage.enterusername(username);
+		//loginPage.enterpassword(password);
+    	expectedMessage =message;
 		String field;
 	
 		NumpyNinjaPage numpyninjapage = loginPage.clickonloginbutton();
@@ -88,7 +92,8 @@ public class LoginTest extends BaseTest {
 
 		}		
 	}
-
+	
+	
     @DataProvider (name = "validexcel")
 	 public Object[][] getTestData() throws IOException 
 	 {

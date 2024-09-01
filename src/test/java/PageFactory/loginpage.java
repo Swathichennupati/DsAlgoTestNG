@@ -97,6 +97,12 @@ public class loginpage extends BasePage {
 	public WebElement getSomeElement(WebElement element) {
 		return wait.until(ExpectedConditions.visibilityOf(element));
 	}
+	
+	public void enterUsernamePassword(String username,String password) throws InterruptedException
+	{
+		enterusername(username);
+		enterpassword(password);
+	}
 
 	public void clickSomeElement(WebElement element) {
 		getSomeElement(element);

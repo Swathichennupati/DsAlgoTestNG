@@ -1,47 +1,74 @@
 package TestSuites;
 	
-	import java.util.Properties;
+	import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
 	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;   
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 
-	import com.dsAlgoProject.Hooks.dsAlgoHooks;
 	import com.dsAlgoWebDriverManager.DriverManager;
 
 	import PageFactory.NumpyNinjaPage;
 	import PageFactory.loginpage;
-	import Utilities.TestDataFromExcelSheet;
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	public class NumpyNinjaTest {
+	public class NumpyNinjaTest extends BaseTest {
 
-	    private WebDriver driver;
-	    private NumpyNinjaPage numpyninjapage;
-	    private loginpage loginPage;
-	    private dsAlgoHooks hooks = new dsAlgoHooks();
-	    private Properties prop;
+		private Map<String, String> data;
+		TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
+		DataproviderUtilities dataproviderUtilities=new DataproviderUtilities();
+		String actual;
+		String expected;
+		public NumpyNinjaTest() {
+			super();
+		}
 
-	    public NumpyNinjaTest() {
-	        this.driver = DriverManager.getDriver();
-	        numpyninjapage = new NumpyNinjaPage(driver);
-	        loginPage = new loginpage(driver);
-	        hooks.performLogin(); // Assuming this method logs in the user
-	    }
+		@Parameters("browser")
+		@BeforeMethod
+		public void setUp(String browser) throws InterruptedException {
+			initializeDriver(browser);
+			logintotheapplication();
+			driver.get(prop.getProperty("numpyninjapage"));
+			numpyninjapage = new NumpyNinjaPage(driver);
 
-	    @DataProvider(name = "dropdownNavigationData")
-	    public Object[][] getDropdownNavigationData() throws Exception {
-	        TestDataFromExcelSheet excelreader = new TestDataFromExcelSheet();
-	        return excelreader.getDataFromExcel("DropdownNavigation"); // Assuming "DropdownNavigation" is your sheet name
-	    }
+		}
+		
+		@Test(priority = 1, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
+		public void testtoselectfromdropdown(String option,String expectedtitle) {
+			numpyninjapage.selectFromDropdown(option);
+			actual = numpyninjapage.getTitle();
+			expected = expectedtitle;
+			Assert.assertEquals(actual, expected, "Title does not match");
 
-	    @Test(dataProvider = "dropdownNavigationData")
-	    public void testDropdownNavigation(String option, String expectedTitle) {
-	        numpyninjapage.selectFromDropdown(option);
-	        String actualTitle = numpyninjapage.getTitle();
-	        Assert.assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-	        System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-	    }
-	}
+		}
+		@Test(priority = 2, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
+		public void testtoselectfromgetstartedbutton(String option,String expectedtitle) {
+			numpyninjapage.clickonthegetstartedbutton(option);
+			actual = numpyninjapage.getTitle();
+			expected = expectedtitle;
+			Assert.assertEquals(actual, expected, "Title does not match");
+
+		}
+
+		@AfterMethod
+		public void teardown() throws IOException {
+			testDataFromExcelSheet.removeTestData();
+
+			driver.quit();
+		}
 
 
+		
+		}
+	

@@ -71,6 +71,13 @@ public class BasePage {
            jsExecutor.executeScript("arguments[0].click();", element);
        }
 		
-	    
+//   	public void typepythoncodeintexteditor(String Pythoncode) throws InterruptedException
+//   	{
+//   		PracticeQuestionsPage practiceQuestionsPage=new PracticeQuestionsPage(driver);
+//   		String text=practiceQuestionsPage.gettextarea();
+//   	 JavascriptExecutor js = (JavascriptExecutor) driver;
+//     js.executeScript("var element = arguments[0]; element.focus(); element.select();", textField);
+//   		textEditor.sendKeys(Pythoncode);
+//   	}
 
 }

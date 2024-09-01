@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
+
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,7 +17,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class TestDataFromExcelSheet {
-
 	
 	private static String EXCEL_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\DsAlgoTestData.xlsx";
     private  ThreadLocal<Map<String, String>> testData = new ThreadLocal<>();
@@ -30,24 +31,33 @@ public class TestDataFromExcelSheet {
             throw new IllegalArgumentException("Sheet with name " + sheetName + " does not exist.");
         }
 
+
         int numberOfRows = sheet.getPhysicalNumberOfRows();
+        
         int numberOfColumns = sheet.getRow(0).getPhysicalNumberOfCells();
 
-        Object[][] data = new Object[numberOfRows - 1][numberOfColumns]; // Exclude the header row
+        List<Object[]> data = new ArrayList<>(); // Exclude the header row
+
 
         // Read each row and store the data in the Object[][]
         for (int i = 1; i < numberOfRows; i++) { // Start from 1 to skip the header row
             Row row = sheet.getRow(i);
-            for (int j = 0; j < numberOfColumns; j++) {
-                Cell cell = row.getCell(j);
-                data[i - 1][j] = cell != null ? cell.toString() : ""; // Store each cell value as String
+            if (isRowEmpty(row)) {
+                continue; // Skip empty rows
             }
+            Object[] rowData = new Object[numberOfColumns];
+            for (int j = 0; j < numberOfColumns; j++) {
+            	Cell cell = row.getCell(j);
+            	rowData[j] = cell != null ? cell.toString() : "";// Store each cell value as String
+            }
+            data.add(rowData);
         }
+
 
 //        workbook.close();
 //        file.close();
 
-        return data;
+        return data.toArray(new Object[data.size()][]);
     }
 	public static Object[][] getDataFromSheetRowwise(String sheetName, int rowIndex) {
         List<Object[]> data = new ArrayList<>();
@@ -105,7 +115,6 @@ public class TestDataFromExcelSheet {
     }
 
     
-
     public  void removeTestData() {
         try {
 			testData.remove();
@@ -113,5 +122,15 @@ public class TestDataFromExcelSheet {
 			e.printStackTrace();
 		}
     }
-}
 
+	private static boolean isRowEmpty(Row row) {
+	    for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
+	        Cell cell = row.getCell(j);
+	        if (cell != null && cell.getCellType() != CellType.BLANK) {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+
+}
