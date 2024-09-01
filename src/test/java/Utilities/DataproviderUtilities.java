@@ -38,11 +38,42 @@ public class DataproviderUtilities
 	        int rowIndex1 = Integer.parseInt(context.getCurrentXmlTest().getParameter("rowIndex1"));
 	        return TestDataFromExcelSheet.getDataFromSheetRowwise(sheetName2, rowIndex1);
 	    }
-	    @DataProvider(name = "LoginTestData")
-	    public Object[][] sheet3DataProvider(ITestContext context) {
-	        String sheetName3 = context.getCurrentXmlTest().getParameter("sheetName3");
-	        int rowIndex = Integer.parseInt(context.getCurrentXmlTest().getParameter("rowIndex1"));
-	        return TestDataFromExcelSheet.getDataFromSheetRowwise(sheetName3, rowIndex);
+	    @DataProvider(name = "UsernameData")
+	    public static Object[][] getLoginData() {
+	        return new Object[][]{
+	            {"", "Please fill out this field.","username"},
+	            {"more than 150 characters", "the username exceeds the character limit of 150","username"},
+	            
+	        };
 	    }
+	    @DataProvider(name = "PasswordValidationData")
+	    public static Object[][] passwordData() {
+	        return new Object[][]{
+	            {"@,.,+,-,_", "password","password_mismatch:The two password fields didn’t match."},
+	            {"@,.,+,-,_", "123456789","password_mismatch:The two password fields didn’t match."},
+	            {"@,.,+,-,_","Af589","password_mismatch:The two password fields didn’t match."},	            
+	        };
+	    }
+	    @DataProvider(name = "PasswordMismatch")
+	    public static Object[][] passwordMismatchData() {
+	        return new Object[][]{
+	        	{"admin1234","Admin@789","password_mismatch:The two password fields didn’t match."}	            
+	        };
+	    }
+	    @DataProvider(name = "dropdownOptions")
+	    public static Object[][] selectdropdownOptions() {
+	    	return new Object[][]{
+	    		{"Arrays","Array"},	        	
+	        	{"Linked List","Linked List"},
+	        	{"Stack","Stack"},
+	        	{"Queue","Queue"},
+	        	{"Tree","Tree"},
+	        	{"Graph","Graph"}
+
+	        	
+	        };
+
+	    }
+	  
 
 }

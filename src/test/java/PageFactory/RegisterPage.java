@@ -3,9 +3,12 @@ package PageFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class RegisterPage extends BasePage{
 	StringBuilder stringBuilder = new StringBuilder();
+	String expected;
+	String actual;
   public  int lengthofusername=0;
 	public RegisterPage(WebDriver driver) {
 
@@ -110,5 +113,51 @@ public class RegisterPage extends BasePage{
 		}
 			return messageStr;
 	}
-
+	public boolean enterusernamefield(String username,String validationmessage,String field)
+	
+	{
+		boolean t= false;
+		if(username==null)
+		{
+			username="";
+		}
+		enterusername(username);
+		clickonRegisterbutton();
+		if(lengthofusername==0)
+		{
+		expected=validationmessage;
+		actual=getRequiredFieldErrorMessage(field);
+		if(actual.equalsIgnoreCase(expected))
+		{
+			t=true;
+		}
+		}	
+		else if(lengthofusername>=150)
+		{
+			String enteredValue=getvalueofusernamefield();
+			int actuallength=enteredValue.length();
+			int expextedlength=150;
+			if(actuallength==expextedlength)
+			{
+				t=true;
+			}
+		}
+		return t;
+	}
+	
+	public void validatePassword(String specialChars, String password)
+	{
+		sendcharacters(specialChars);	
+		enterpassword(password);
+		enterconfirmpassword(password);
+		clickonRegisterbutton();
+		
+	}
+	public void validatepasswordmismatch(String password1, String password2)
+	{
+		enterusername(prop.getProperty("username"));
+		enterpassword(password1);
+		enterconfirmpassword(password2);
+		clickonRegisterbutton();
+	}
 }

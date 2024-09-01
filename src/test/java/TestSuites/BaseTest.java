@@ -20,6 +20,7 @@ import com.dsAlgoWebDriverManager.DriverManager;
 
 import PageFactory.ArrayPage;
 import PageFactory.NumpyNinjaPage;
+import PageFactory.PracticeQuestionsPage;
 import PageFactory.loginpage;
 import Utilities.ConfigReader;
 import Utilities.ExtentReportManager;
@@ -38,7 +39,10 @@ public class BaseTest {
 	protected WebDriver driver;
     protected NumpyNinjaPage numpyninjapage;
     protected ArrayPage arrayPage;
-    public loginpage loginPage;
+    protected loginpage loginPage;
+    protected PracticeQuestionsPage practiceQuestionsPage;
+
+    
 
 	public BaseTest()
 	{
@@ -81,6 +85,9 @@ public class BaseTest {
 		}
 	}
 
+	
+	
+	
 //	private void captureScreenshotOnFailure(Scenario scenario) throws IOException {
 //		if (scenario.isFailed()) {
 //
