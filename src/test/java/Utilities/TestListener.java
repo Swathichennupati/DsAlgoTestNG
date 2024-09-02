@@ -21,12 +21,17 @@ public class TestListener extends BaseTest implements ITestListener {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
 
-    @Override
-    public void onStart(ITestContext iTestContext) {
-    	LoggerLoad.info("I am in onStart method " + iTestContext.getName());
-    	
-        iTestContext.setAttribute("WebDriver", this.driver);
-    }
+	@Override
+	public void onStart(ITestContext iTestContext) {
+		LoggerLoad.info("I am in onStart method " + iTestContext.getName());
+
+		if (driver != null) {
+			iTestContext.setAttribute("WebDriver", driver);
+		} else {
+			LoggerLoad.error("WebDriver is null in onStart method");
+		}
+	}
+	 
 
     @Override
     public void onFinish(ITestContext iTestContext) {
