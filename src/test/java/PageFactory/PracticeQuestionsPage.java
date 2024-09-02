@@ -1,31 +1,11 @@
 package PageFactory;
 
-import static org.testng.Assert.assertEquals;
-
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
-import com.dsAlgoWebDriverManager.DriverManager;
-import PageFactory.NumpyNinjaPage;
-import Utilities.DataproviderUtilities;
-import Utilities.TestDataFromExcelSheet;
-import log4j.LoggerLoad;
-import PageFactory.ArrayPage;
 
 public class PracticeQuestionsPage extends BasePage {
 
