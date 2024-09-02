@@ -62,8 +62,10 @@ public class ArrayPage extends BasePage {
 		   break;
 		   
 		case "Arrays Using List":
+			System.out.println("i'm here");
 			
-			clickElementUsingJS(arraysUsingList_Link);			
+			clickElementUsingJS(arraysUsingList_Link);
+			System.out.println("clicked");
 			break;
 			
 		case "Basic Operations in Lists":
