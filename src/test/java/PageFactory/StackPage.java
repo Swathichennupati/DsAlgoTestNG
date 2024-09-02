@@ -23,10 +23,10 @@ import org.openqa.selenium.WebDriver;
 		@FindBy(xpath="//a[@href='operations-in-stack']")
 		WebElement operation_Lnk;
 		
-		@FindBy(xpath="//a[@href='/stack/implementation/']")
+		@FindBy(xpath="//a[@href='implementation']")
 		WebElement implemen_Lnk;
 		
-		@FindBy(xpath="//a[@href=\"/stack/stack-applications/\"]")
+		@FindBy(xpath="//a[@href='stack-applications']")
 		WebElement applic_Lnk;
 		
 		@FindBy(xpath="//a[@href='/stack/practice']")
@@ -36,7 +36,7 @@ import org.openqa.selenium.WebDriver;
 		
 		//TryEditor
 		@FindBy(xpath= "//a[@href='/tryEditor']")
-		WebElement TryEdt_btn;
+		WebElement tryhereBtn;
 
 		@FindBy(xpath="//button[contains(text(),'Run')]")
 		WebElement run_btn;
@@ -49,10 +49,10 @@ import org.openqa.selenium.WebDriver;
 			getStarted_stack.click();
 		}
 		
-		public void clickonTryEditor() {
-			TryEdt_btn.click();
+		public  void TryhereBtn() {
+			
+			tryhereBtn.click();
 		}
-
 		public void clickRun() {
 			 run_btn.click();
 		}

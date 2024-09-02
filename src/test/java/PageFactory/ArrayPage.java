@@ -1,7 +1,6 @@
 package PageFactory;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 public class ArrayPage extends BasePage {
 	
 	private WebDriver driver;
-
 	public  ArrayPage(WebDriver driver) {
 		
 	    super(driver);
@@ -50,6 +48,7 @@ public class ArrayPage extends BasePage {
 	public void clickRun() {
 		 run_btn.click();
 	}
+
 	
 	public void clickingLink(String linkName) throws Exception {
 		
@@ -60,23 +59,25 @@ public class ArrayPage extends BasePage {
 			arrayPython_Link.click();
 			
 		   break;
-		   
+		  
 		case "Arrays Using List":
 			System.out.println("i'm here");
 			
-			clickElementUsingJS(arraysUsingList_Link);
-			System.out.println("clicked");
+			//clickElementUsingJS(arraysUsingList_Link);	
+			arraysUsingList_Link.click();
 			break;
 			
 		case "Basic Operations in Lists":
 			
-			clickElementUsingJS(basicOperations_Link);
+			//clickElementUsingJS(basicOperations_Link);
+			basicOperations_Link.click();
 			
 			break;
 			
         case "Applications of Array":
 			
-			clickElementUsingJS(applicationsOfArray_Link);
+			//clickElementUsingJS(applicationsOfArray_Link);
+			applicationsOfArray_Link.click();
 
 			break;	
 			

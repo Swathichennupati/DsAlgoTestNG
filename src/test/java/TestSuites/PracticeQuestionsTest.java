@@ -1,15 +1,10 @@
 package TestSuites;
 
-import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -20,11 +15,9 @@ import PageFactory.PracticeQuestionsPage;
 import Utilities.DataproviderUtilities;
 import Utilities.Retry;
 import Utilities.TestDataFromExcelSheet;
-import log4j.LoggerLoad;
 
 public class PracticeQuestionsTest extends BaseTest {
 
-	private Map<String, String> data;
 	TestDataFromExcelSheet testDataFromExcelSheet = new TestDataFromExcelSheet();
 	DataproviderUtilities dataproviderUtilities = new DataproviderUtilities();
 	PracticeQuestionsPage practiceQuestionsPage;

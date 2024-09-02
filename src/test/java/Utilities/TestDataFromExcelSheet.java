@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -39,11 +40,10 @@ public class TestDataFromExcelSheet {
         List<Object[]> data = new ArrayList<>(); // Exclude the header row
 
 
-        // Read each row and store the data in the Object[][]
-        for (int i = 1; i < numberOfRows; i++) { // Start from 1 to skip the header row
+        for (int i = 1; i < numberOfRows; i++) { 
             Row row = sheet.getRow(i);
             if (isRowEmpty(row)) {
-                continue; // Skip empty rows
+                continue; 
             }
             Object[] rowData = new Object[numberOfColumns];
             for (int j = 0; j < numberOfColumns; j++) {
@@ -53,9 +53,6 @@ public class TestDataFromExcelSheet {
             data.add(rowData);
         }
 
-
-//        workbook.close();
-//        file.close();
 
         return data.toArray(new Object[data.size()][]);
     }
@@ -123,7 +120,11 @@ public class TestDataFromExcelSheet {
 		}
     }
 
+
 	private static boolean isRowEmpty(Row row) {
+		if (Objects.isNull(row)) {
+			return true;
+		}
 	    for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
 	        Cell cell = row.getCell(j);
 	        if (cell != null && cell.getCellType() != CellType.BLANK) {

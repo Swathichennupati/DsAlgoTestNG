@@ -24,13 +24,13 @@ public class QueuePage extends BasePage {
 	@FindBy(xpath = "//a[@href=\"implementation-lists\"]")
 	WebElement implQueuePython_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/queue/implementation-collections/\"]")
+	@FindBy(xpath = "//a[@href=\"implementation-collections\"]")
 	WebElement implCollectionDeque_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/queue/Implementation-array/\"]")
+	@FindBy(xpath = "//a[@href=\"Implementation-array\"]")
 	WebElement implUsingArray_Link;
 	
-	@FindBy(xpath = "//a[@href=\"/queue/QueueOp/\"]")
+	@FindBy(xpath = "//a[@href=\"QueueOp\"]")
 	WebElement queueOper_Link;
 	
 	@FindBy(xpath = "//a[@href=\"/queue/practice\"]")
@@ -70,7 +70,7 @@ public class QueuePage extends BasePage {
 		
 	}
 	
-	public void clickingHyperLink(String linkName) throws Exception {
+	public void clickingLink(String linkName) throws Exception {
 		
 		switch(linkName) {
 		

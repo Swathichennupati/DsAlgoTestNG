@@ -76,12 +76,12 @@ import org.openqa.selenium.support.FindBy;
 	        return driver.getTitle();
 	    }
 		
-	    public void clickonlink(String nameoflink) {
+	    public void clickingLink(String nameoflink) {
 	        switch (nameoflink) {
-	            case "Graphgraph":
+	            case "Graph":
 	            	graphlink.click();
 	                break;
-	            case "Graph representations":
+	            case "Graph Representations":
 	            	graphrepresentationslink.click();
 	                break;
 	            case "Try Here":

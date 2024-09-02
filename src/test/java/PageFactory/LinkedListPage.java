@@ -43,7 +43,7 @@ public class LinkedListPage extends BasePage {
 	@FindBy(xpath="//a[text()='Sign out']")
 	private  WebElement signout;
 	
-	public void selectonlink(String nameoflink) {
+	public void clickingLink(String nameoflink) {
 		switch (nameoflink) {
 		case "Introduction":
 			Introductionlink.click();
@@ -78,6 +78,13 @@ public class LinkedListPage extends BasePage {
 		default:
 			throw new IllegalArgumentException("No such link: " + nameoflink);
 		}
+		
+		
 
+	}
+	
+	 public  void clickontryhere() {
+		
+		 tryherebutton.click();
 	}
 }

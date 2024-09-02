@@ -1,3 +1,4 @@
+
 package TestSuites;
 	
 	import static org.testng.Assert.assertEquals;
@@ -86,24 +87,24 @@ import log4j.LoggerLoad;
 		}
 
 
-//		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
-//	    @Parameters("sheetName1")
-//		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
-//			driver.get(prop.getProperty(Url));
-//			arrayPage.clickonTryEditor();
-//			Assert.assertEquals(arrayPage.getTitle(), pageTitle);
-//			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
-//					+ expectedtitle);
-//
-//		}
-//		@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
-//	    @Parameters("sheetName2")
-//		public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
-//		{
-//			int numberoflinks=arrayPage.getnumberoflinksinPracticeQuestionsPage();
-//			Assert.assertEquals(numberoflinks,Expectednumberoflinks );
-//			
-//		}
+		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			driver.get(prop.getProperty(Url));
+			arrayPage.clickonTryEditor();
+			Assert.assertEquals(arrayPage.getTitle(), pageTitle);
+			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+					+ expectedtitle);
+
+		}
+		@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName2")
+		public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
+		{
+			int numberoflinks=arrayPage.getnumberoflinksinPracticeQuestionsPage();
+			Assert.assertEquals(numberoflinks,Expectednumberoflinks );
+			
+		}
 
 
 }
