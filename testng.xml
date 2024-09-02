@@ -4,6 +4,7 @@
 <suite name="Suite" parallel="tests" thread-count="3">
 	<listeners>
 		<listener class-name="Utilities.RetryListener" />
+		<listener class-name="Utilities.TestListener"></listener>
 	</listeners>
 	<test name="ChromeTestforArray">
 
@@ -46,7 +47,7 @@
 		<parameter name="browser" value="firefox" />
 		<parameter name="sheetName1" value="Graph" />
 		<parameter name="sheetName2" value="DsAlgo" />
-		<parameter name="rowIndex1" value="1" />
+		<parameter name="rowIndex1" value="1" /> 
 		<classes>
 			<class name="TestSuites.GraphTest" />
 			
@@ -137,7 +138,7 @@
 		</classes>
 	</test>
 
-<!--
+
 	<test name="ChromePracticeQuestionsTest">
 		<parameter name="browser" value="chrome" />
 		<parameter name="sheetName1" value="PracticeQuestions" />
@@ -166,7 +167,7 @@
 		<classes>
 			<class name="TestSuites.PracticeQuestionsTest" />
 		</classes>
-	</test>-->
+	</test>
 
 	<test name="ChromeDataStructureTest">
 		<parameter name="browser" value="chrome" />

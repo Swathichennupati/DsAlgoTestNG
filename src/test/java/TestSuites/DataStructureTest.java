@@ -1,14 +1,17 @@
 package TestSuites;
 
+import static Utilities.ExtentTestManager.startTest;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import PageFactory.DataStructurePage;
 import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
@@ -38,7 +41,9 @@ public class DataStructureTest extends BaseTest {
 
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
+	public void testHyperlinkNavigation(Method method, String linkText, String expectedTitle,String Url, String pageTitle) {
+		
+		startTest(method.getName(), "testHyperlinkNavigation.");
 		
 		try
 		{
@@ -64,7 +69,9 @@ public class DataStructureTest extends BaseTest {
 
 	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+	public void testTryHereNavigation(Method method, String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		
+		startTest(method.getName(), "testTryHereNavigation.");
 		driver.get(prop.getProperty(Url));
 		dataStructurePage.clickontryherebutton();
 		Assert.assertEquals(dataStructurePage.getTitle(), pageTitle);

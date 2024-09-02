@@ -1,8 +1,10 @@
 package TestSuites;
 	
-	import static org.testng.Assert.assertEquals;
+import static Utilities.ExtentTestManager.startTest;
+import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -38,7 +40,9 @@ import log4j.LoggerLoad;
 
 		@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
 	    @Parameters("sheetName1")
-		public void testhyperlinkNavigation(String linkText, String expectedTitle, String Url, String pageTitle) {
+		public void testhyperlinkNavigation(Method method, String linkText, String expectedTitle, String Url, String pageTitle) {
+			
+			startTest(method.getName(), "testhyperlinkNavigation.");
 			try {
 				if (linkText.equalsIgnoreCase("Practice Questions")) {
 					driver.get(prop.getProperty("OverviewofTreespage"));
@@ -61,7 +65,9 @@ import log4j.LoggerLoad;
 
 		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
 	    @Parameters("sheetName1")
-		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		public void testTryHereNavigation(Method method, String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			
+			startTest(method.getName(), "testTryHereNavigation.");
 			driver.get(prop.getProperty(Url));
 			treePage.TryhereBtn();
 			Thread.sleep(300);

@@ -1,8 +1,10 @@
 package TestSuites;
 
+import static Utilities.ExtentTestManager.startTest;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 
@@ -43,13 +45,9 @@ public class ArrayTest extends BaseTest {
 	
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) throws InterruptedException {
+	public void testHyperlinkNavigation(Method method, String linkText, String expectedTitle,String Url, String pageTitle) throws InterruptedException {
 		
-		/*
-		 * try { if (linkText.equalsIgnoreCase("Practice Questions")) {
-		 * driver.get(prop.getProperty("arraysinPython")); } }catch(Exception e) {
-		 * System.out.println(e.getMessage()); }
-		 */
+		startTest(method.getName(), "testHyperlinkNavigation.");
 			try {
 				arrayPage.clickingLink(linkText);
 			} catch (Exception e) {
@@ -69,7 +67,9 @@ public class ArrayTest extends BaseTest {
 
 	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+	public void testTryHereNavigation(Method method, String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		
+		startTest(method.getName(), "testTryHereNavigation.");
 		driver.get(prop.getProperty(Url));
 		arrayPage.clickonTryEditor();
 		Assert.assertEquals(arrayPage.getTitle(), pageTitle);
@@ -79,8 +79,9 @@ public class ArrayTest extends BaseTest {
 	}
 	@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName2")
-	public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
+	public void numberOfLinksInPractiseQuestionsPage(Method method,String page,int Expectednumberoflinks)
 	{
+		startTest(method.getName(), "numberOfLinksInPractiseQuestionsPage.");
 		int numberoflinks=arrayPage.getnumberoflinksinPracticeQuestionsPage();
 		Assert.assertEquals(numberoflinks,Expectednumberoflinks );
 		

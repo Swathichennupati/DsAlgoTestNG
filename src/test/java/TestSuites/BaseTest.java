@@ -3,16 +3,11 @@ package TestSuites;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -22,9 +17,6 @@ import PageFactory.ArrayPage;
 import PageFactory.NumpyNinjaPage;
 import PageFactory.PracticeQuestionsPage;
 import PageFactory.loginpage;
-import Utilities.ConfigReader;
-import Utilities.ExtentReportManager;
-import Utilities.RetryforFailedScenarios;
 import Utilities.TestDataFromExcelSheet;
 
 
@@ -76,6 +68,11 @@ public class BaseTest {
 			lock.unlock();
 		}
 	}
+
+	public WebDriver getDriver() {
+		return this.driver;
+	}
+	
 	
 //	private void captureScreenshotOnFailure(Scenario scenario) throws IOException {
 //	if (scenario.isFailed()) {
