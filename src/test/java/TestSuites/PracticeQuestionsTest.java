@@ -37,15 +37,15 @@ public class PracticeQuestionsTest extends BaseTest {
 		practiceQuestionsPage = new PracticeQuestionsPage(driver);
 	}
 
-//	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
-//    @Parameters("sheetName1")
-//	public void testtonavigateAssessmentPageFromPracticeQuestionspage(String link,String expectedTitle, String code, String url,String expectedMessage,String failedMessageF) throws Exception {
-//		practiceQuestionsPage.clickingLink(link);
-//		String actualTitle = practiceQuestionsPage.getTitle();
-//		Assert.assertEquals(actualTitle.trim(), expectedTitle.trim(), "Titles don't match!");
-//		System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-//		
-//	}
+	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
+	public void testtonavigateAssessmentPageFromPracticeQuestionspage(String link,String expectedTitle, String code, String url,String expectedMessage,String failedMessageF) throws Exception {
+		practiceQuestionsPage.clickingLink(link);
+		String actualTitle = practiceQuestionsPage.getTitle();
+		Assert.assertEquals(actualTitle.trim(), expectedTitle.trim(), "Titles don't match!");
+		System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+		
+	}
 
 	@Test(priority = 2, dataProvider = "TitleValidationTestData", dataProviderClass = DataproviderUtilities.class,retryAnalyzer = Retry.class)
 

@@ -43,7 +43,7 @@ public class ArrayTest extends BaseTest {
 	
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
+	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) throws InterruptedException {
 		
 		/*
 		 * try { if (linkText.equalsIgnoreCase("Practice Questions")) {
@@ -55,13 +55,18 @@ public class ArrayTest extends BaseTest {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			Thread.sleep(300);
 			String actualTitle = arrayPage.getTitle();
 			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-		
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");		
 	}
 
-	
+	@AfterMethod
+	public void teardown() throws IOException {
+		testDataFromExcelSheet.removeTestData();
+		driver.quit();
+	}
+
 	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
 	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
@@ -80,14 +85,6 @@ public class ArrayTest extends BaseTest {
 		Assert.assertEquals(numberoflinks,Expectednumberoflinks );
 		
 	}
-	
-	@AfterMethod
-	public void teardown() throws IOException {
-		testDataFromExcelSheet.removeTestData();
-
-		driver.quit();
-	}
-
 }
 
 

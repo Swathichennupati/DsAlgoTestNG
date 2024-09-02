@@ -9,8 +9,8 @@
 
 		<parameter name="browser" value="chrome" />
 		<parameter name="sheetName1" value="Arrays" />
-		<parameter name="sheetName2" value="DsAlgo" />
-		<parameter name="rowIndex1" value="1" />
+			<parameter name="sheetName2" value="DsAlgo" />
+			<parameter name="rowIndex1" value="1" />
 		<classes>
 			<class name="TestSuites.ArrayTest" />
 			
@@ -33,8 +33,8 @@
 
 		<parameter name="browser" value="firefox" />
 		<parameter name="sheetName1" value="Arrays" />
-		<parameter name="sheetName2" value="DsAlgo" />
-		<parameter name="rowIndex1" value="1" />
+			<parameter name="sheetName2" value="DsAlgo" />
+			<parameter name="rowIndex1" value="1" />
 		<classes>
 			<class name="TestSuites.ArrayTest" />
 			
@@ -83,18 +83,16 @@
 		</classes>
 	</test>
 	
-		<test name="FirefoxRegisterTest">
+	<test name="FirefoxRegisterTest">
 		<parameter name="browser" value="firefox" />
-
 		<classes>
 			<class name="TestSuites.RegisterTest" />
 		</classes>
 	</test>
 	
 	
-		<test name="EdgeRegisterTest">
+	<test name="EdgeRegisterTest">
 		<parameter name="browser" value="edge" />
-
 		<classes>
 			<class name="TestSuites.RegisterTest" />
 		</classes>
@@ -102,7 +100,6 @@
 
 	<test name="EdgeNumpyNinjaTest">
 		<parameter name="browser" value="edge" />
-
 		<classes>
 			<class name="TestSuites.NumpyNinjaTest" />
 		</classes>
@@ -110,14 +107,12 @@
 	
 	<test name="ChromeNumpyNinjaTest">
 		<parameter name="browser" value="chrome" />
-
 		<classes>
 			<class name="TestSuites.NumpyNinjaTest" />
 		</classes>
 	</test>
 	<test name="FirefoxNumpyNinjaTest">
 		<parameter name="browser" value="firefox" />
-
 		<classes>
 			<class name="TestSuites.NumpyNinjaTest" />
 		</classes>
@@ -125,21 +120,18 @@
 
 	<test name="FirefoxLoginTest">
 		<parameter name="browser" value="firefox" />
-
 		<classes>
 			<class name="TestSuites.LoginTest" />
 		</classes>
 	</test>
 	<test name="EdgeLoginTest">
 		<parameter name="browser" value="edge" />
-
 		<classes>
 			<class name="TestSuites.LoginTest" />
 		</classes>
 	</test>
-<test name="ChromeLoginTest">
+	<test name="ChromeLoginTest">
 		<parameter name="browser" value="chrome" />
-
 		<classes>
 			<class name="TestSuites.LoginTest" />
 		</classes>
