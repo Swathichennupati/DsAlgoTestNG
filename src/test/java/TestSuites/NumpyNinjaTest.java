@@ -1,28 +1,20 @@
 
 package TestSuites;
 	
-	import static org.testng.Assert.assertEquals;
-
+import static Utilities.ExtentTestManager.startTest;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Properties;
 
-	import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-
-	import com.dsAlgoWebDriverManager.DriverManager;
-
-	import PageFactory.NumpyNinjaPage;
-	import PageFactory.loginpage;
+import PageFactory.NumpyNinjaPage;
 import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
-import log4j.LoggerLoad;
 
 	public class NumpyNinjaTest extends BaseTest {
 
@@ -46,7 +38,9 @@ import log4j.LoggerLoad;
 		}
 		
 		@Test(priority = 1, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
-		public void testtoselectfromdropdown(String option,String expectedtitle) {
+		public void testtoselectfromdropdown(Method method, String option,String expectedtitle) {
+			
+			startTest(method.getName(), "testtoselectfromdropdown.");
 			numpyninjapage.selectFromDropdown(option);
 			actual = numpyninjapage.getTitle();
 			expected = expectedtitle;
@@ -54,7 +48,9 @@ import log4j.LoggerLoad;
 
 		}
 		@Test(priority = 2, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
-		public void testtoselectfromgetstartedbutton(String option,String expectedtitle) {
+		public void testtoselectfromgetstartedbutton(Method method, String option,String expectedtitle) {
+			
+			startTest(method.getName(), "testtoselectfromgetstartedbutton.");
 			numpyninjapage.clickonthegetstartedbutton(option);
 			actual = numpyninjapage.getTitle();
 			expected = expectedtitle;
