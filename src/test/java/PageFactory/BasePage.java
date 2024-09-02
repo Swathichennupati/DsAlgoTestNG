@@ -37,39 +37,45 @@ public class BasePage {
 		}
 		
 		public void signOutAndWaitForSignIn(WebElement signout) {
+			
 	        WebElement signOutLink = wait.until(ExpectedConditions.elementToBeClickable(signout));
 	        signOutLink.click();
 	        wait.until(ExpectedConditions.urlContains("home"));
 	    }
 		
 		public String getErrorMessage(By locator) {
+			
 	        WebElement errorMessageElement = driver.findElement(locator);
 	        return errorMessageElement.getText();
 	    }
 
 	    public String getErrorMessage(WebElement errorMessageElement) {
+	    	
 	        return errorMessageElement.getText();
 	    }
 	
 	    public String getSucessfulMessage(WebElement sucessMessageElement) {
+	    	
 	        return sucessMessageElement.getText();
 	    }
 	  
-       public String getTitle()
-       {
+       public String getTitle() {
+    	   
     	   return driver.getTitle();
        }
        
-       public void waitfortheelement(WebElement element)
-       {
+       public void waitfortheelement(WebElement element) {
+    	   
     	   WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     	   wait.until(ExpectedConditions.visibilityOf(element));
     	   
      }
        public void clickElementUsingJS(WebElement element) {
+    	   
            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
            jsExecutor.executeScript("arguments[0].click();", element);
        }
+
 		
 //   	public void typepythoncodeintexteditor(String Pythoncode) throws InterruptedException
 //   	{
@@ -79,5 +85,6 @@ public class BasePage {
 //     js.executeScript("var element = arguments[0]; element.focus(); element.select();", textField);
 //   		textEditor.sendKeys(Pythoncode);
 //   	}
+
 
 }

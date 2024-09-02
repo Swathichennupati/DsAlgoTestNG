@@ -5,34 +5,149 @@
 	<listeners>
 		<listener class-name="Utilities.RetryListener" />
 	</listeners>
-	<parameter name="browser" value="chrome" />
-	<parameter name="browser" value="firefox" />
-	<parameter name="browser" value="edge" />
+	<test name="ChromeTestforArray">
 
-	<test name="CrossbrowserAndParallelTest">
+		<parameter name="browser" value="chrome" />
 		<parameter name="sheetName1" value="Arrays" />
 		<parameter name="sheetName2" value="DsAlgo" />
 		<parameter name="rowIndex1" value="1" />
 		<classes>
 			<class name="TestSuites.ArrayTest" />
+			
 		</classes>
 	</test>
-	<test name="RegisterTest">
+	
+	<test name="EdgeTestforArray">
+
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="Arrays" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.ArrayTest" />
+			
+		</classes>
+	</test>
+	
+	<test name="FirefoxTestforArray">
+
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="Arrays" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.ArrayTest" />
+			
+		</classes>
+	</test>
+	
+	<test name="FirefoxTestforGraph">
+
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="Graph" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.GraphTest" />
+			
+		</classes>
+	</test>
+	
+	<test name="EdgeTestforGraph">
+
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="Graph" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.GraphTest" />
+			
+		</classes>
+	</test>
+	
+	<test name="ChromeTestforGraph">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="Graph" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.GraphTest" />
+			
+		</classes>
+	</test>
+
+	<test name="ChromeRegisterTest">
+		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="TestSuites.RegisterTest" />
 		</classes>
 	</test>
-	<test name="NumpyNinjaTest">
+	
+		<test name="FirefoxRegisterTest">
+		<parameter name="browser" value="firefox" />
+
+		<classes>
+			<class name="TestSuites.RegisterTest" />
+		</classes>
+	</test>
+	
+	
+		<test name="EdgeRegisterTest">
+		<parameter name="browser" value="edge" />
+
+		<classes>
+			<class name="TestSuites.RegisterTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeNumpyNinjaTest">
+		<parameter name="browser" value="edge" />
+
 		<classes>
 			<class name="TestSuites.NumpyNinjaTest" />
 		</classes>
 	</test>
-	<test name="LoginTest">
+	
+	<test name="ChromeNumpyNinjaTest">
+		<parameter name="browser" value="chrome" />
+
+		<classes>
+			<class name="TestSuites.NumpyNinjaTest" />
+		</classes>
+	</test>
+	<test name="FirefoxNumpyNinjaTest">
+		<parameter name="browser" value="firefox" />
+
+		<classes>
+			<class name="TestSuites.NumpyNinjaTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxLoginTest">
+		<parameter name="browser" value="firefox" />
+
 		<classes>
 			<class name="TestSuites.LoginTest" />
 		</classes>
 	</test>
-	<test name="PracticeQuestionsTest">
+	<test name="EdgeLoginTest">
+		<parameter name="browser" value="edge" />
+
+		<classes>
+			<class name="TestSuites.LoginTest" />
+		</classes>
+	</test>
+<test name="ChromeLoginTest">
+		<parameter name="browser" value="chrome" />
+
+		<classes>
+			<class name="TestSuites.LoginTest" />
+		</classes>
+	</test>
+
+<!--
+	<test name="ChromePracticeQuestionsTest">
+		<parameter name="browser" value="chrome" />
 		<parameter name="sheetName1" value="PracticeQuestions" />
 		<parameter name="sheetName2" value="DsAlgo" />
 		<parameter name="rowIndex1" value="1" />
@@ -40,6 +155,148 @@
 			<class name="TestSuites.PracticeQuestionsTest" />
 		</classes>
 	</test>
+	
+	<test name="EdgePracticeQuestionsTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="PracticeQuestions" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.PracticeQuestionsTest" />
+		</classes>
+	</test>
+	
+	<test name="firefoxPracticeQuestionsTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="PracticeQuestions" />
+		<parameter name="sheetName2" value="DsAlgo" />
+		<parameter name="rowIndex1" value="1" />
+		<classes>
+			<class name="TestSuites.PracticeQuestionsTest" />
+		</classes>
+	</test>-->
+
+	<test name="ChromeDataStructureTest">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="dstructure" />
+		<classes>
+			<class name="TestSuites.DataStructureTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeDataStructureTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="dstructure" />
+		<classes>
+			<class name="TestSuites.DataStructureTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxDataStructureTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="dstructure" />
+		<classes>
+			<class name="TestSuites.DataStructureTest" />
+		</classes>
+	</test>
+
+	<test name="ChromeLinkedListTest">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="linkedList" />
+		<classes>
+			<class name="TestSuites.LinkedListTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeLinkedListTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="linkedList" />
+		<classes>
+			<class name="TestSuites.LinkedListTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxLinkedListTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="linkedList" />
+		<classes>
+			<class name="TestSuites.LinkedListTest" />
+		</classes>
+	</test>
+
+	<test name="ChromeQueueTest">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="Queue" />
+		<classes>
+			<class name="TestSuites.QueueTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeQueueTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="Queue" />
+		<classes>
+			<class name="TestSuites.QueueTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxQueueTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="Queue" />
+		<classes>
+			<class name="TestSuites.QueueTest" />
+		</classes>
+	</test>
+
+	<test name="ChromeStackTest">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="Stack" />
+		<classes>
+			<class name="TestSuites.StackTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeStackTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="Stack" />
+		<classes>
+			<class name="TestSuites.StackTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxStackTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="Stack" />
+		<classes>
+			<class name="TestSuites.StackTest" />
+		</classes>
+	</test>
+
+	<test name="ChromeTreeTest">
+		<parameter name="browser" value="chrome" />
+		<parameter name="sheetName1" value="Tree" />
+		<classes>
+			<class name="TestSuites.TreeTest" />
+		</classes>
+	</test>
+
+	<test name="EdgeTreeTest">
+		<parameter name="browser" value="edge" />
+		<parameter name="sheetName1" value="Tree" />
+		<classes>
+			<class name="TestSuites.TreeTest" />
+		</classes>
+	</test>
+
+	<test name="FirefoxTreeTest">
+		<parameter name="browser" value="firefox" />
+		<parameter name="sheetName1" value="Tree" />
+		<classes>
+			<class name="TestSuites.TreeTest" />
+		</classes>
+	</test>
+
+
 	<test name="RerunFailedTests" parallel="false">
 		<classes>
 			<class name="Utilities.RetryforFailedScenarios" />

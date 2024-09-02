@@ -1,44 +1,94 @@
 package TestSuites;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
+import java.util.Map;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+//import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import com.dsAlgoProject.Hooks.dsAlgoHooks; 
+import com.dsAlgoProject.Hooks.dsAlgoHooks;
 
 import com.dsAlgoWebDriverManager.DriverManager;
+
+import PageFactory.BasePage;
+import PageFactory.DataStructurePage;
 import PageFactory.GraphPage;
 import PageFactory.NumpyNinjaPage;
 import PageFactory.loginpage;
+import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-public class GraphTest {
+public class GraphTest extends BaseTest {
 
-    private WebDriver driver;
-    private GraphPage graphpage;
-    private loginpage loginPage;
-    private dsAlgoHooks hooks = new dsAlgoHooks();
+	private GraphPage graphpage;
+	private Map<String, String> data;
+	
+	TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
 
-    public GraphTest() {
-        this.driver = DriverManager.getDriver();
-        loginPage = new loginpage(driver);
-        graphpage = new GraphPage(driver);
-        hooks.performLogin(); // Assuming this method logs in the user
-    }
+	public GraphTest() {
 
-    @DataProvider(name = "graphLinkData")
-    public Object[][] getGraphLinkData() throws Exception {
-        TestDataFromExcelSheet excelreader = new TestDataFromExcelSheet();
-        return excelreader.getDataFromExcel("GraphLinks"); // Assuming "GraphLinks" is your sheet name
-    }
+		super();
 
-    @Test(dataProvider = "graphLinkData")
-    public void testClickGraphLinkAndLandOnPage(String link, String expectedPage) throws InterruptedException {
-        graphpage.clickonlink(link);
-        String actualTitle = graphpage.getTitle();
-        Assert.assertEquals(actualTitle, expectedPage, "Titles don't match!");
-        System.out.println("Assertion passed for " + expectedPage + " page.");
-    }
+	}
 
-    // Remaining test methods (user enters code, runs, verifies output) can be adapted similarly
+	@Parameters("browser")
+	@BeforeMethod
+	public void setUp(String browser) throws InterruptedException {
+		initializeDriver(browser);
+		logintotheapplication();		
+		graphpage = new GraphPage(driver);
+		driver.get(prop.getProperty("graphpage"));
+	}
+
+	
+	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
+	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
+
+		try {
+			if (linkText.equalsIgnoreCase("Practice Questions")) {
+				driver.get(prop.getProperty("graphgraphpage"));
+				
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		try {
+			graphpage.clickingLink(linkText);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		String actualTitle = graphpage.getTitle();
+		assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+		System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+
+	}
+
+
+	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
+	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		driver.get(prop.getProperty(Url));
+		graphpage.clickontryherebutton();
+		Thread.sleep(300);
+		Assert.assertEquals(graphpage.getTitle(), pageTitle);
+		LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+				+ expectedtitle);
+
+	}
+	
+	@AfterMethod
+	public void teardown() throws IOException {
+		testDataFromExcelSheet.removeTestData();
+		driver.quit();
+	}
 }

@@ -1,58 +1,81 @@
 package TestSuites;
 	
-	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;
+	import static org.testng.Assert.assertEquals;
 
-	import com.dsAlgoProject.Hooks.dsAlgoHooks; 
-	 // Assuming this class handles login
-	import com.dsAlgoWebDriverManager.DriverManager;
+import java.io.IOException;
 
-	import PageFactory.NumpyNinjaPage;
-	import PageFactory.StackPage;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import PageFactory.StackPage;
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	public class StackTest {
+	public class StackTest extends BaseTest {
 
-	    private WebDriver driver;
 	    private StackPage stackPage;
-	    private NumpyNinjaPage numpyninjapage;
-	    private dsAlgoHooks hooks = new dsAlgoHooks(); // Assuming this is for login
+	    TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
 
-	    public StackTest() {
-	        this.driver = DriverManager.getDriver();
-	        numpyninjapage = new NumpyNinjaPage(driver);
-	        stackPage = new StackPage(driver);
-	        hooks.performLogin(); // Assuming this method logs in the user (adjust if needed)
-	    }
+		public StackTest() {
 
-	    // Data provider for hyperlink navigation test
-	    @DataProvider(name = "hyperlinkNavigationData")
-	    public Object[][] getHyperlinkNavigationData() {
-	        return new Object[][] {
-	                {"Operations"}, // Link name and expected title
-	                {"Applications"},   // You can add more data sets here
-	        };
-	    }
+			super();
 
-	    @Test(dataProvider = "hyperlinkNavigationData")
-	    public void testHyperlinkNavigation(String linkName, String expectedTitle) throws Exception {
-	        stackPage.clickingLink(linkName);
-	        String actualTitle = stackPage.getTitle();
-	        assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-	        System.out.println("Test passed: Navigated to " + expectedTitle + " page."); 
-	    }
+		}
 
-	    // Data provider for "Try Editor" button navigation (optional)
-	    @DataProvider(name = "tryEditorNavigationData") // Uncomment if you have data for different "Try Editor" scenarios
-	    public Object[][] getTryEditorNavigationData() {
-	        return new Object[][] {
-	                // {/* "Try Editor" button text */, /* expected title */}, // Fill in data
-	        };
-	    }
 
-	    @Test(dataProvider = "tryEditorNavigationData") // Uncomment if you have data
-	    public void testTryEditorNavigation(String tryEditorText, String expectedTitle) throws Exception {
-	        // Implement logic to click "Try Editor" button and verify title
-	    }
+		@Parameters("browser")
+		@BeforeMethod
+		public void setUp(String browser) throws InterruptedException {
+			initializeDriver(browser);
+			logintotheapplication();
+			driver.get(prop.getProperty("stackPage"));
+			stackPage = new StackPage(driver);
+		}
+
+	   
+
+
+		@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testhyperlinkNavigation(String linkText, String expectedTitle, String Url, String pageTitle) {
+			try {
+				if (linkText.equalsIgnoreCase("Practice Questions")) {
+					driver.get(prop.getProperty("operationsStack"));
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				stackPage.clickingLink(linkText);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			String actualTitle = stackPage.getTitle();
+			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+
+		}
+
+
+		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			driver.get(prop.getProperty(Url));
+			stackPage.TryhereBtn();
+			Assert.assertEquals(stackPage.getTitle(), pageTitle);
+			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+					+ expectedtitle);
+
+		}
+		
+		@AfterMethod
+		public void teardown() throws IOException {
+			testDataFromExcelSheet.removeTestData();
+			driver.quit();
+		}
 
 }

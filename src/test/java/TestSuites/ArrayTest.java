@@ -5,21 +5,21 @@ import static org.testng.Assert.assertEquals;
 import java.io.IOException;
 import java.util.Map;
 
-import org.openqa.selenium.WebDriver;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import com.dsAlgoWebDriverManager.DriverManager;
-import PageFactory.NumpyNinjaPage;
 import Utilities.DataproviderUtilities;
 import Utilities.TestDataFromExcelSheet;
 import log4j.LoggerLoad;
 import PageFactory.ArrayPage;
 
+
 public class ArrayTest extends BaseTest {
+	
+	private ArrayPage arrayPage;
 
 	private Map<String, String> data;
 	TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
@@ -34,23 +34,22 @@ public class ArrayTest extends BaseTest {
 
 		initializeDriver(browser);
 		logintotheapplication();
+		arrayPage = new ArrayPage(driver);
 		driver.get(prop.getProperty("arrayPage"));
+	
 
 	}
+
 	
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
 	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
 		
-		try
-		{
-		if (linkText.equalsIgnoreCase("Practice Questions")) {
-			driver.get(prop.getProperty("arraysinPython"));
-		}
-		}catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
+		/*
+		 * try { if (linkText.equalsIgnoreCase("Practice Questions")) {
+		 * driver.get(prop.getProperty("arraysinPython")); } }catch(Exception e) {
+		 * System.out.println(e.getMessage()); }
+		 */
 			try {
 				arrayPage.clickingLink(linkText);
 			} catch (Exception e) {
@@ -62,14 +61,7 @@ public class ArrayTest extends BaseTest {
 		
 	}
 
-	@AfterMethod
-	public void teardown() throws IOException {
-		testDataFromExcelSheet.removeTestData();
-
-		driver.quit();
-	}
-
-
+	
 	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
 	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
@@ -88,5 +80,14 @@ public class ArrayTest extends BaseTest {
 		Assert.assertEquals(numberoflinks,Expectednumberoflinks );
 		
 	}
+	
+	@AfterMethod
+	public void teardown() throws IOException {
+		testDataFromExcelSheet.removeTestData();
+
+		driver.quit();
+	}
 
 }
+
+

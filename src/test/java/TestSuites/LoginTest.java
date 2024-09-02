@@ -1,9 +1,8 @@
 package TestSuites;
-	
-	import java.io.IOException;
-	import java.util.Map;
 
-	import org.openqa.selenium.WebDriver;
+
+	import java.io.IOException;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -11,22 +10,20 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-
-	import com.dsAlgoWebDriverManager.DriverManager;
-
 import PageFactory.NumpyNinjaPage;
-	import PageFactory.loginpage;
-import Utilities.DataproviderUtilities;
+
+
 import Utilities.TestDataFromExcelSheet;
+
 import log4j.LoggerLoad;
 
+
 public class LoginTest extends BaseTest {
-	private Object[][] data;
 	NumpyNinjaPage numpyninjapage;
 	TestDataFromExcelSheet testDataFromExcelSheet;
-    private static String EXCEL_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\resources\\testdata\\DsAlgoTestData.xlsx";
      String expectedMessage;
      String actualMessage;
+
 
 	public LoginTest() {
 		super();
@@ -93,9 +90,8 @@ public class LoginTest extends BaseTest {
 		}		
 	}
 	
-	
     @DataProvider (name = "validexcel")
-	 public Object[][] getTestData() throws IOException 
+	 public Object[][] getTestData() throws IOException
 	 {
 		Object data[][]=null;
 			data = TestDataFromExcelSheet.getTestData("LoginUsernamePassword");
@@ -109,3 +105,4 @@ public class LoginTest extends BaseTest {
 	}
 
 }
+

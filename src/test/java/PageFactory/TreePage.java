@@ -46,7 +46,7 @@ public class TreePage extends BasePage {
 	@FindBy(xpath="//a[text()='Implementation of Binary Trees']")
 	private  WebElement ImplementationofBinaryTrees;
 
-	@FindBy(xpath="//a[text()='Applications of Binary trees']")
+	@FindBy(xpath="//a[@href='applications-of-binary-trees']")
 	private  WebElement ApplicationsofBinarytrees;
 
 	@FindBy(xpath="//a[text()='Binary Search Trees']")
@@ -56,7 +56,7 @@ public class TreePage extends BasePage {
 	private  WebElement ImplementationOfBST;
 
 	@FindBy(xpath="//a[contains(text(),'Try here')]")
-	private  WebElement tryherebutton;
+	private  WebElement tryhereBtn;
 
 	@FindBy(xpath="//a[@href='/tree/practice']")
 	private  WebElement practicelink;
@@ -71,58 +71,108 @@ public class TreePage extends BasePage {
 	@FindBy(xpath="//a[text()='Sign out']")
 	private  WebElement signout;
 	
-	public void clickonlink(String nameoflink) {
+	public void clickingLink(String nameoflink) {
+		
         switch (nameoflink) {
+        
             case "Overview of Trees":
+            	
             	OverviewofTrees.click();
+            	
                 break;
+                
             case "Terminologies":
+            	
             	Terminologies.click();
+            	
+            	
                 break;
             case "Types of Trees":
+            	
             	TypesofTrees.click();
+            	
                 break;
+                
             case "Tree Traversals":
+            	
             	TreeTraversals.click();
+            	
                 break;  
+                
                 case "Traversals-Illustration":
+                	
                 	TraversalsIllustration.click();
+                	
                     break;
+                    
                 case "Binary Trees":
+                	
                 	BinaryTrees.click();
+                	
                     break;
+                    
                 case "Types of Binary Trees":
+                	
                 	TypesofBinaryTrees.click();
+                	
                     break;
+                    
                 case "Implementation in Python":
+                	
                 	ImplementationinPython.click();
+                	
                     break;
+                    
                 case "Binary Tree Traversals":
+                	
                 	BinaryTreeTraversals.click();
+                	
                     break;
+                    
                 case "Implementation of Binary Trees":
+                	
                 	ImplementationofBinaryTrees.click();
+                	
                     break;
+                    
                 case "Applications of Binary trees":
+                	
                 	ApplicationsofBinarytrees.click();
+                	
                     break;
+                    
                 case "Binary Search Trees":
+                	
                 	BinarySearchTrees.click();
+                	
                     break;
+                    
                 case "Implementation Of BST":
+                	
                 	ImplementationOfBST.click();
+                	
                     break;
-                case "Try Here":
-                	tryherebutton.click();
-                	break;
+                
                 case "Practice Questions":
-                practicelink.click();
+                	
+                    practicelink.click();
+                
                 break;
+                
                 case "Sign out":
+                	
                	 signOutAndWaitForSignIn(signout);
+               	 
                  	break;
+                 	
                default:
+            	   
                 throw new IllegalArgumentException("No such link: " + nameoflink);
         }
 	}
+	
+          public  void TryhereBtn() {
+		
+		       tryhereBtn.click();
+	       }
 }

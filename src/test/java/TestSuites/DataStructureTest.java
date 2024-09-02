@@ -1,41 +1,91 @@
 package TestSuites;
-	
-import org.openqa.selenium.WebDriver;
+
+import static org.testng.Assert.assertEquals;
+
+import java.io.IOException;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
-import com.dsAlgoWebDriverManager.DriverManager;
-
-
 import PageFactory.DataStructurePage;
-import PageFactory.NumpyNinjaPage;
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-public class DataStructureTest {
+public class DataStructureTest extends BaseTest {
 
-    private WebDriver driver;
-    private DataStructurePage datastructurepage;
+	private DataStructurePage dataStructurePage;
 
-    public DataStructureTest() {
-        this.driver = DriverManager.getDriver();
-        datastructurepage = new DataStructurePage(driver);
-    }
+	TestDataFromExcelSheet testDataFromExcelSheet = new TestDataFromExcelSheet();
 
-    // Data provider for data structure navigation test
-    @DataProvider(name = "dataStructureNavigationData")
-    public Object[][] getDataStructureNavigationData() { 
-        return new Object[][] {
-                {"Stack"},  // Link text and expected title
-                {"Queue"},   // You can add more data sets here
-        };
-    }
+	public DataStructureTest() {
+		super();
+	}
 
-    @Test(dataProvider = "dataStructureNavigationData")
-    public void testNavigateToDataStructure(String linkText, String expectedTitle) throws Exception {
-        datastructurepage.selectonlink(linkText);
-        String actualTitle = datastructurepage.getTitle();
-        Assert.assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-        System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-    }
+	@Parameters("browser")
+	@BeforeMethod
+	public void setUp(String browser) throws InterruptedException {
+		initializeDriver(browser);
+		logintotheapplication();
+		dataStructurePage = new DataStructurePage(driver);
+		driver.get(prop.getProperty("datastructurepage"));
+		
+	}
+
+	
+
+	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
+	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
+		
+		try
+		{
+		if (linkText.equalsIgnoreCase("Practice Questions")) {
+			driver.get(prop.getProperty("TimeComplexitypage"));
+		}
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+			try {
+				dataStructurePage.clickingLink(linkText);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			String actualTitle = dataStructurePage.getTitle();
+			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+		
+	}
+
+	
+
+	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+    @Parameters("sheetName1")
+	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		driver.get(prop.getProperty(Url));
+		dataStructurePage.clickontryherebutton();
+		Assert.assertEquals(dataStructurePage.getTitle(), pageTitle);
+		LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+				+ expectedtitle);
+
+	}
+	
+//	@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
+//    @Parameters("sheetName2")
+//	public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
+//	{
+//		int numberoflinks=dataStructurePage.getnumberoflinksinPracticeQuestionsPage();
+//		Assert.assertEquals(numberoflinks,Expectednumberoflinks );
+//		
+//	}
+	
+
+	@AfterMethod
+	public void teardown() throws IOException {
+		testDataFromExcelSheet.removeTestData();
+		driver.quit();
+	}
 }
-

@@ -1,45 +1,89 @@
 package TestSuites;
 	
-	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;
+	import static org.testng.Assert.assertEquals;
 
-	import com.dsAlgoProject.Hooks.dsAlgoHooks;
+import java.io.IOException;
+import java.util.Map;
 
-	import com.dsAlgoWebDriverManager.DriverManager;
 
-	import PageFactory.LinkedListPage;
-	import PageFactory.NumpyNinjaPage;
-	import PageFactory.loginpage;
-	import Utilities.TestDataFromExcelSheet;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
-	public class LinkedListTest {
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
-	    private WebDriver driver;
-	    private LinkedListPage linkedlistpage;
-	    private loginpage loginPage;
-	    private dsAlgoHooks hooks = new dsAlgoHooks();
+	
 
-	    public LinkedListTest() {
-	        this.driver = DriverManager.getDriver();
-	        loginPage = new loginpage(driver);
-	        linkedlistpage = new LinkedListPage(driver);
-	        hooks.performLogin(); // Assuming this method logs in the user
-	    }
 
-	    @DataProvider(name = "linkedListLinkData")
-	    public Object[][] getLinkedListLinkData() throws Exception {
-	        TestDataFromExcelSheet excelreader = new TestDataFromExcelSheet();
-	        return excelreader.getDataFromExcel("LinkedListLinks"); // Assuming "LinkedListLinks" is your sheet name
-	    }
+import PageFactory.LinkedListPage;
+	
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	    @Test(dataProvider = "linkedListLinkData")
-	    public void testClickLinkedListLinkAndLandOnPage(String link, String expectedPage) throws InterruptedException {
-	        linkedlistpage.selectonlink(link);
-	        String actualTitle = linkedlistpage.getTitle();
-	        Assert.assertEquals(actualTitle, expectedPage, "Titles don't match!");
-	        System.out.println("Assertion passed for " + expectedPage + " page.");
-	    }
+	public class LinkedListTest extends BaseTest {
+
+		private LinkedListPage linkedListPage;
+		
+		
+		TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
+
+		public LinkedListTest() {
+
+			super();
+
+		}
+
+		@Parameters("browser")
+		@BeforeMethod
+		public void setUp(String browser) throws InterruptedException {
+			initializeDriver(browser);
+			logintotheapplication();
+			driver.get(prop.getProperty("linkedlistpage"));
+			linkedListPage = new LinkedListPage(driver);
+		}
+
+		@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testhyperlinkNavigation(String linkText, String expectedTitle, String Url, String pageTitle) {
+			try {
+				if (linkText.equalsIgnoreCase("Practice Questions")) {
+					driver.get(prop.getProperty("Introductionpage"));
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				linkedListPage.clickingLink(linkText);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			String actualTitle = linkedListPage.getTitle();
+			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+
+		}
+
+
+		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			driver.get(prop.getProperty(Url));
+			linkedListPage.clickontryhere();
+			Thread.sleep(500);
+			Assert.assertEquals(linkedListPage.getTitle(), pageTitle);
+			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+					+ expectedtitle);
+
+		}
+		
+		@AfterMethod
+		public void teardown() throws IOException {
+			testDataFromExcelSheet.removeTestData();
+			driver.quit();
+		}
 	}
 
 

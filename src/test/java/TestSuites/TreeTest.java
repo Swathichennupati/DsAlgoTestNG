@@ -1,46 +1,84 @@
 package TestSuites;
 	
-	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;
+	import static org.testng.Assert.assertEquals;
 
-	import com.dsAlgoProject.Hooks.dsAlgoHooks; 
-	 // Assuming this class handles login
-	import com.dsAlgoWebDriverManager.DriverManager;
+import java.io.IOException;
 
-	import PageFactory.NumpyNinjaPage;
-	import PageFactory.TreePage;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import PageFactory.TreePage;
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	public class TreeTest {
+	public class TreeTest extends BaseTest {
 
-	    private WebDriver driver;
-	    private TreePage treepage;
-	    private NumpyNinjaPage numpyninjapage;
-	    private dsAlgoHooks hooks = new dsAlgoHooks(); // Assuming this is for login
+	    private TreePage treePage;
+	    TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
 
-	    public TreeTest() {
-	        this.driver = DriverManager.getDriver();
-	        numpyninjapage = new NumpyNinjaPage(driver);
-	        treepage = new TreePage(driver);
-	        hooks.performLogin(); // Assuming this method logs in the user (adjust if needed)
-	    }
+		public TreeTest() {
 
-	    // Data provider for tree navigation test
-	    @DataProvider(name = "treeNavigationData")
-	    public Object[][] getTreeNavigationData() {
-	        return new Object[][] {
-	                {"Traversal"}, // Link text and expected title
-	                {"Operations"},  // You can add more data sets here
-	        };
-	    }
+			super();
 
-	    @Test(dataProvider = "treeNavigationData")
-	    public void testTreeNavigation(String linkText, String expectedTitle) throws Exception {
-	        treepage.clickonlink(linkText);
-	        String actualTitle = treepage.getTitle();
-	        Assert.assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-	        System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-	    }
+		}
+
+
+		@Parameters("browser")
+		@BeforeMethod
+		public void setUp(String browser) throws InterruptedException {
+			initializeDriver(browser);
+			logintotheapplication();
+			driver.get(prop.getProperty("treepage"));
+			treePage = new TreePage(driver);
+		}
+
+
+		@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testhyperlinkNavigation(String linkText, String expectedTitle, String Url, String pageTitle) {
+			try {
+				if (linkText.equalsIgnoreCase("Practice Questions")) {
+					driver.get(prop.getProperty("OverviewofTreespage"));
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				treePage.clickingLink(linkText);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			String actualTitle = treePage.getTitle();
+			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+
+		}
+
+
+		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			driver.get(prop.getProperty(Url));
+			treePage.TryhereBtn();
+			Thread.sleep(300);
+			Assert.assertEquals(treePage.getTitle(), pageTitle);
+			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+					+ expectedtitle);
+
+		}
+		
+		@AfterMethod
+		public void teardown() throws IOException {
+			testDataFromExcelSheet.removeTestData();
+			driver.quit();
+		}
 	}
+
+
+
 
 

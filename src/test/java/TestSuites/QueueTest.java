@@ -1,59 +1,84 @@
 package TestSuites;
 
-	import org.openqa.selenium.WebDriver;
-	import org.testng.annotations.DataProvider;
-	import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+import PageFactory.QueuePage;
+import Utilities.DataproviderUtilities;
+import Utilities.TestDataFromExcelSheet;
+import log4j.LoggerLoad;
 
-	import com.dsAlgoWebDriverManager.DriverManager;
+	public class QueueTest extends BaseTest {
 
-
-	import PageFactory.NumpyNinjaPage;
-	import PageFactory.QueuePage;
-
-	public class QueueTest {
-
-	    private WebDriver driver;
 	    private QueuePage queuePage;
-	    private NumpyNinjaPage numpyninjapage;
 
-	    public QueueTest() {
-	        this.driver = DriverManager.getDriver();
-	        numpyninjapage = new NumpyNinjaPage(driver);
-	        queuePage = new QueuePage(driver);
-	    }
+	    TestDataFromExcelSheet testDataFromExcelSheet=new TestDataFromExcelSheet();
 
-	    // Data provider for hyperlink navigation test
-	    @DataProvider(name = "hyperlinkNavigationData")
-	    public Object[][] getHyperlinkNavigationData() {
-	        return new Object[][] {
-	                {"Enqueue Operations"}, // Link name and expected title
-	                {"Dequeue Operations"},   // You can add more data sets here
-	        };
-	    }
+		public QueueTest() {
 
-	    @Test(dataProvider = "hyperlinkNavigationData")
-	    public void testHyperlinkNavigation(String linkName, String expectedTitle) throws Exception {
-	        // Assuming user is already on the Queue overview page
-	        queuePage.clickingHyperLink(linkName);
-	        String actualTitle = queuePage.getTitle();
-	        assertEquals(actualTitle, expectedTitle, "Titles don't match!");
-	        System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
-	    }
+			super();
 
-	    // Data provider for "Try Here" button navigation test (optional)
-	    @DataProvider(name = "tryHereNavigationData") // Uncomment if you have data for different "Try Here" scenarios
-	    public Object[][] getTryHereNavigationData() {
-	        return new Object[][] {
-	                // {/* "Try Here" button text  */, /* expected title */}, // Fill in data
-	        };
-	    }
+		}
 
-	    @Test(dataProvider = "tryHereNavigationData") // Uncomment if you have data
-	    public void testTryHereNavigation(String tryHereText, String expectedTitle) throws Exception {
-	        // Implement logic to click "Try Here" button and verify title
-	    }
 
-	    // Similar data providers and tests can be added for other functionalities
+		@Parameters("browser")
+		@BeforeMethod
+		public void setUp(String browser) throws InterruptedException {
+			initializeDriver(browser);
+			logintotheapplication();
+			driver.get(prop.getProperty("queuePage"));
+			queuePage = new QueuePage(driver);
+		}
+		
+
+		@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testhyperlinkNavigation(String linkText, String expectedTitle, String Url, String pageTitle) throws Exception {
+			try {
+				if (linkText.equalsIgnoreCase("Practice Questions")) {
+					driver.get(prop.getProperty("implQueueinPython"));
+					queuePage = new QueuePage(driver);
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				queuePage.clickingLink(linkText);
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+			//Thread.sleep(300);
+			String actualTitle = queuePage.getTitle();
+			
+			assertEquals(actualTitle, expectedTitle, "Titles don't match!");
+			System.out.println("Test passed: Navigated to " + expectedTitle + " page.");
+
+		}
+
+
+		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
+	    @Parameters("sheetName1")
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+			queuePage = new QueuePage(driver);
+			driver.get(prop.getProperty(Url));
+			queuePage.TryhereBtn();
+			Thread.sleep(300);
+			Assert.assertEquals(queuePage.getTitle(), pageTitle);
+			LoggerLoad.info("The user clicked on the " + Url + "and clicked on tryhere button" + "then navigated to"
+					+ expectedtitle);
+
+		}
+		
+		@AfterMethod
+		public void teardown() throws IOException {
+			testDataFromExcelSheet.removeTestData();
+			driver.quit();
+		}
 	}
 
 
