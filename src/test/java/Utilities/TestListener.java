@@ -1,5 +1,6 @@
 package Utilities;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
 import TestSuites.BaseTest;
@@ -17,6 +18,7 @@ import java.util.Objects;
 import static Utilities.ExtentTestManager.getTest;
 
 public class TestListener extends BaseTest implements ITestListener {
+	
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
@@ -24,12 +26,7 @@ public class TestListener extends BaseTest implements ITestListener {
 	@Override
 	public void onStart(ITestContext iTestContext) {
 		LoggerLoad.info("I am in onStart method " + iTestContext.getName());
-
-		if (driver != null) {
-			iTestContext.setAttribute("WebDriver", driver);
-		} else {
-			LoggerLoad.error("WebDriver is null in onStart method");
-		}
+		
 	}
 	 
 
@@ -37,13 +34,13 @@ public class TestListener extends BaseTest implements ITestListener {
     public void onFinish(ITestContext iTestContext) {
         LoggerLoad.info("I am in onFinish method " + iTestContext.getName());
         //Do tier down operations for ExtentReports reporting!
-        ExtentManager.extentReports.flush();
+        ExtentManager.extent.flush();
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-    	LoggerLoad.info(getTestMethodName(iTestResult) + " test is starting.");
-    	
+        ExtentTest test = ExtentManager.extent.createTest(getTestMethodName(iTestResult));
+        ExtentTestManager.setTest(test);
     }
 
     @Override

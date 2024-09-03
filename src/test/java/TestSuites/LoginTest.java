@@ -1,9 +1,7 @@
 package TestSuites;
 
 
-import static Utilities.ExtentTestManager.startTest;
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -37,9 +35,8 @@ public class LoginTest extends BaseTest {
 	
 	
     @Test(priority=1,dataProvider = "validexcel",description = "Login Scenario with correct username and password.")
-	public void testforCorrectUsernamePassword(Method method, String username,String password,String message) throws IOException, InterruptedException 
+	public void testforCorrectUsernamePassword(String username,String password,String message) throws IOException, InterruptedException 
 	{
-    	startTest(method.getName(), "Login Scenario with correct username and password.");
     	loginPage.enterUsernamePassword(username,password);
     	//loginPage.enterusername(username);
 		//loginPage.enterpassword(password);

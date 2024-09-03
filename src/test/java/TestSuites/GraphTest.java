@@ -1,10 +1,8 @@
 package TestSuites;
 
-import static Utilities.ExtentTestManager.startTest;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -43,9 +41,8 @@ public class GraphTest extends BaseTest {
 	
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testHyperlinkNavigation(Method method, String linkText, String expectedTitle,String Url, String pageTitle) {
+	public void testHyperlinkNavigation(String linkText, String expectedTitle,String Url, String pageTitle) {
 
-		startTest(method.getName(), "testHyperlinkNavigation.");
 		try {
 			if (linkText.equalsIgnoreCase("Practice Questions")) {
 				driver.get(prop.getProperty("graphgraphpage"));
@@ -69,9 +66,8 @@ public class GraphTest extends BaseTest {
 
 	@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testTryHereNavigation(Method method, String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+	public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
 		
-		startTest(method.getName(), "testTryHereNavigation.");
 		driver.get(prop.getProperty(Url));
 		graphpage.clickontryherebutton();
 		Thread.sleep(300);

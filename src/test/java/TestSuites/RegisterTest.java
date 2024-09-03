@@ -1,9 +1,7 @@
 
 package TestSuites;
 	
-import static Utilities.ExtentTestManager.startTest;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Map;
 
@@ -46,17 +44,15 @@ import log4j.LoggerLoad;
 
 		}
 		@Test(priority = 1, dataProvider = "UsernameData",dataProviderClass = DataproviderUtilities.class)
-		public void the_user_enters_in_the_usernamefield_and_submits_the_form(Method method, String username,String validationmessage,String field) {
+		public void the_user_enters_in_the_usernamefield_and_submits_the_form(String username,String validationmessage,String field) {
 			
-			startTest(method.getName(), "the_user_enters_in_the_usernamefield_and_submits_the_form.");
 			boolean usernamelengthvalidation=registerpage.enterusernamefield(username,validationmessage,field);
 			Assert.assertTrue(usernamelengthvalidation);
 		}
 		
 		@Test(priority = 2, dataProvider = "PasswordValidationData",dataProviderClass = DataproviderUtilities.class)
-		public void passwordValidationwithincorrecttestdata(Method method, String specialChars,String password,String validationmessage) {
+		public void passwordValidationwithincorrecttestdata(String specialChars,String password,String validationmessage) {
 			
-			startTest(method.getName(), "passwordValidationwithincorrecttestdata.");
 			registerpage.validatePassword(specialChars,password);
 			expected=validationmessage;
 			actual=registerpage.getalertmessage();
@@ -64,9 +60,8 @@ import log4j.LoggerLoad;
 		}
 		
 		@Test(priority = 3, dataProvider = "PasswordMismatch",dataProviderClass = DataproviderUtilities.class)
-		public void PasswordMismatchValidation(Method method, String password,String retypepassword,String validationmessage) {
+		public void PasswordMismatchValidation(String password,String retypepassword,String validationmessage) {
 			
-			startTest(method.getName(), "PasswordMismatchValidation.");
 			registerpage.validatepasswordmismatch(password,retypepassword);
 			expected=validationmessage;
 			actual=registerpage.getalertmessage();
@@ -74,9 +69,8 @@ import log4j.LoggerLoad;
 		}
 		
 		@Test(priority = 4)
-		public void PasswordMismatchValidation(Method method) {
+		public void PasswordMismatchValidation() {
 			
-			startTest(method.getName(), "PasswordMismatchValidation.");
 			registerpage.clickonloginbutton();
 			actual=registerpage.getTitle();
 			expected="Login";
@@ -93,9 +87,8 @@ import log4j.LoggerLoad;
 
 		@Test(priority = 2, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
 	    @Parameters("sheetName1")
-		public void testTryHereNavigation(Method method, String link, String expectedtitle, String Url, String pageTitle) throws Exception {
+		public void testTryHereNavigation(String link, String expectedtitle, String Url, String pageTitle) throws Exception {
 			
-			startTest(method.getName(), "testTryHereNavigation.");
 			driver.get(prop.getProperty(Url));
 			arrayPage.clickonTryEditor();
 			Assert.assertEquals(arrayPage.getTitle(), pageTitle);
@@ -105,9 +98,8 @@ import log4j.LoggerLoad;
 		}
 		@Test(priority=3, dataProvider ="NumberOfLinksTestData",dataProviderClass = DataproviderUtilities.class)
 	    @Parameters("sheetName2")
-		public void numberOfLinksInPractiseQuestionsPage(Method method, String page,int Expectednumberoflinks)
+		public void numberOfLinksInPractiseQuestionsPage(String page,int Expectednumberoflinks)
 		{
-			startTest(method.getName(), "numberOfLinksInPractiseQuestionsPage.");
 			int numberoflinks=arrayPage.getnumberoflinksinPracticeQuestionsPage();
 			Assert.assertEquals(numberoflinks,Expectednumberoflinks );
 			

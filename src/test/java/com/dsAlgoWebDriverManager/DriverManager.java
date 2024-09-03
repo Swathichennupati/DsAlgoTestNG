@@ -93,7 +93,7 @@ public class DriverManager {
 						+ "\\src\\test\\resources\\config\\global.properties");
 				prop.load(input);
 				
-				System.out.println(prop.getProperty("browserName"));
+				//System.out.println(prop.getProperty("browserName"));
 				
 			} catch (IOException ex) {
 				

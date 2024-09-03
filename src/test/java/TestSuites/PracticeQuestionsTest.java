@@ -1,10 +1,7 @@
 package TestSuites;
 
 
-import static Utilities.ExtentTestManager.startTest;
-
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import org.openqa.selenium.Alert;
 import org.testng.Assert;
@@ -41,8 +38,7 @@ public class PracticeQuestionsTest extends BaseTest {
 
 	@Test(priority = 1, dataProvider = "TitleValidationTestData",dataProviderClass = DataproviderUtilities.class)
     @Parameters("sheetName1")
-	public void testtonavigateAssessmentPageFromPracticeQuestionspage(Method method, String link,String expectedTitle, String code, String url,String expectedMessage,String failedMessageF) throws Exception {
-		startTest(method.getName(), "testtonavigateAssessmentPageFromPracticeQuestionspage.");
+	public void testtonavigateAssessmentPageFromPracticeQuestionspage(String link,String expectedTitle, String code, String url,String expectedMessage,String failedMessageF) throws Exception {
 		practiceQuestionsPage.clickingLink(link);
 		String actualTitle = practiceQuestionsPage.getTitle();
 		Assert.assertEquals(actualTitle.trim(), expectedTitle.trim(), "Titles don't match!");
@@ -53,10 +49,9 @@ public class PracticeQuestionsTest extends BaseTest {
 	@Test(priority = 2, dataProvider = "TitleValidationTestData", dataProviderClass = DataproviderUtilities.class,retryAnalyzer = Retry.class)
 
 	@Parameters("sheetName1")
-	public void testToEnterPythonCodeInAssessmentPage(Method method, String link, String expectedTitle, String code, String url,
+	public void testToEnterPythonCodeInAssessmentPage(String link, String expectedTitle, String code, String url,
 	    String expectedMessage, String failedMessage) throws Exception {
 		
-		startTest(method.getName(), "testToEnterPythonCodeInAssessmentPage.");
 		driver.get(prop.getProperty(url));
 		practiceQuestionsPage.typepythoncodeintexteditor(code);
 		practiceQuestionsPage.clickonrunButton();

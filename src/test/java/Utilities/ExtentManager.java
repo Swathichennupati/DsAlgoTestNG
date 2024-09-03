@@ -4,13 +4,21 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
 public class ExtentManager {
-    public static final ExtentReports extentReports = new ExtentReports();
+    public static ExtentReports extent;
 
-    public synchronized static ExtentReports createExtentReports() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter("extent-reports/extent-report.html");
-        reporter.config().setReportName("DsAlgo Extent Report");
-        extentReports.attachReporter(reporter);
-        extentReports.setSystemInfo("Team", "QA Squad");
-        return extentReports;
+    public static ExtentReports createInstance(String fileName) {
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
+        // Configure the reporter (e.g., theme, report name, etc.) if needed
+
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
+        // Set system information or other global configurations if needed
+
+        return extent;
     }
+    
+    public static ExtentReports getExtentReport() {
+		return extent;
+
+    } 
 }
