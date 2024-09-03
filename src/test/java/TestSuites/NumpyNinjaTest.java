@@ -1,9 +1,7 @@
 
 package TestSuites;
 	
-import static Utilities.ExtentTestManager.startTest;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -38,9 +36,8 @@ import Utilities.TestDataFromExcelSheet;
 		}
 		
 		@Test(priority = 1, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
-		public void testtoselectfromdropdown(Method method, String option,String expectedtitle) {
+		public void testtoselectfromdropdown(String option,String expectedtitle) {
 			
-			startTest(method.getName(), "testtoselectfromdropdown.");
 			numpyninjapage.selectFromDropdown(option);
 			actual = numpyninjapage.getTitle();
 			expected = expectedtitle;
@@ -48,9 +45,8 @@ import Utilities.TestDataFromExcelSheet;
 
 		}
 		@Test(priority = 2, dataProvider = "dropdownOptions",dataProviderClass = DataproviderUtilities.class)
-		public void testtoselectfromgetstartedbutton(Method method, String option,String expectedtitle) {
+		public void testtoselectfromgetstartedbutton(String option,String expectedtitle) {
 			
-			startTest(method.getName(), "testtoselectfromgetstartedbutton.");
 			numpyninjapage.clickonthegetstartedbutton(option);
 			actual = numpyninjapage.getTitle();
 			expected = expectedtitle;
@@ -64,9 +60,5 @@ import Utilities.TestDataFromExcelSheet;
 
 			driver.quit();
 		}
-
-
-
 		
 		}
-	

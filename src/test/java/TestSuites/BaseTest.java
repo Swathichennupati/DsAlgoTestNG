@@ -9,6 +9,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeSuite;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.dsAlgoWebDriverManager.DriverManager;
@@ -17,6 +18,7 @@ import PageFactory.ArrayPage;
 import PageFactory.NumpyNinjaPage;
 import PageFactory.PracticeQuestionsPage;
 import PageFactory.loginpage;
+import Utilities.ExtentManager;
 import Utilities.TestDataFromExcelSheet;
 
 
@@ -39,6 +41,11 @@ public class BaseTest {
 	public BaseTest()
 	{
 		prop = DriverManager.getproperties();
+	}
+	
+	@BeforeSuite
+	public void setUp() {
+	    ExtentManager.createInstance("test-output/extent-report.html");
 	}
 	
 	public void initializeDriver(String browser) throws InterruptedException {
